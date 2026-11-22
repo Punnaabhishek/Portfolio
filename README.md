@@ -31,7 +31,7 @@ Live preview: https://claude.ai/artifact/YSMVNEaj97o4H1AMmEEcT9
 8. **Selected Work** — four project cards.
 9. **Who am I** — photo card, bio, career ledger and skill set.
 10. **Contact band** — email / phone copy buttons.
-11. **Footer** — brand, links, live clock and availability status.
+11. **Footer** — giant outlined name that fills in as you scroll, then one line with copyright, live Chennai clock and contact links.
 
 ## Design
 
@@ -80,8 +80,27 @@ Switched from the Azure-blue accent to a monochrome black-on-white scheme and re
 - Replaced the floating-pill statement with a skill dial: the sentence on top, five skill pills either side, a low-poly dodecahedron in the middle (Three.js r128 from cdnjs) and a detail card underneath.
 - Each of the ten skills owns one pentagon. The face shows the real tool logo on a white tile with the name beneath (Azure DevOps, Docker, Terraform, Kubernetes, Git, Grafana, Key Vault, Python + Bash, Azure, SonarQube); two spare faces carry the AP monogram and "5+ years on Azure". Added `img/git.svg`, `img/azuredevops.svg` and `img/keyvault.svg`; all logo SVGs now carry an intrinsic 24px size so they draw cleanly onto canvas textures.
 - The face turned to the front is the selected skill. The card shows its proof sentence, tools and where it was used, with a dot strip to jump between skills.
-- Idle: the dial steps to the next skill every few seconds. Drag to browse with inertia, hover or tap a pill or a face to jump to it, and on desktop the pills drift toward the cursor.
+- The dial follows the mouse anywhere over the statement section, tilting toward the cursor without any dragging. That tilt is layered on top of the dial's own state, so idle stepping (next skill every few seconds), drag with inertia, and hover or tap on a pill or face all still work. On desktop the pills drift toward the cursor too.
 - Rendering pauses off screen; auto-stepping respects reduced-motion; on phones the dial sits above the pills and card.
+
+### 2026-11-22 — Footer replaced with a giant name reveal
+
+- Removed the status-panel footer (brand blurb, link columns, status card). Its contents were duplicates of the nav and hero.
+- The page now ends with "ABHISHEK PUNNA" set full-width in outlined capitals, mirroring the hero. As the footer scrolls into view the letters fill solid one by one, and empty again on the way back up. Letters lift slightly on hover.
+- Beneath it, one line: copyright and role, the live Chennai clock, and LinkedIn / Email / Call pills plus a back-to-top button.
+
+### 2026-11-22 — Navigation jumps fixed
+
+- Nav targets (About, Work, Experience, Contact) now land just below the fixed bar instead of under it (`scroll-margin-top` equal to the nav height, 76px desktop / 64px mobile).
+- On screens wider than 640px each target section is at least one viewport tall with its content vertically centred, so clicking a nav item shows that section on its own rather than the top of the next one.
+- Fixed a regression from that change: the About collage rendered blank because the centred grid let its wrapper shrink to zero width (the panel's screenshots are absolutely positioned). `.wrap` now has an explicit 100% width.
+- Collage goes to a single column of screenshots under 480px.
+
+### 2026-11-22 — Mobile pass (verified with headless Edge at 320 / 360 / 390 px)
+
+- The dial hint line was `white-space: nowrap` and 547px wide, which pushed the page out to 461px and clipped every section on phones. It now wraps on mobile and the "follows your mouse" part is desktop-only. `html` also clips horizontal overflow as a safety net.
+- Two class-name collisions fixed: the hero's "PUNNA" span used `.solid`, the same class as the 3D dial container, so it inherited a square aspect ratio and left a 250px gap above the portrait (dial container renamed to `.dial`, hero span to `.fill`). The highlight cards' author block used `.who`, the same class as the Experience section, so it inherited 40px / 90px section padding (section rules scoped to `section.who`).
+- Result: zero elements wider than the viewport at 320, 360 and 390px; hero, collage, dial, pills, card, stepper, work cards, ledger, CTA and footer all stack correctly.
 
 ### 2026-11-21 — Azure blue palette
 
