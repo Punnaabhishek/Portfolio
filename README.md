@@ -176,6 +176,40 @@ Email, phone and LinkedIn each appeared four or five times. Now each has one cle
 - Work card descriptions expanded with the résumé's specifics: Azure CLI steps, Entra ID service connections, pull-request workflow for infrastructure, App Store and Play Store release automation, root-cause analysis.
 - Skills: new "Platforms & ITSM" row (Rackspace, SendGrid, Ivanti) and a "Languages" row (English, Telugu).
 
+### 2026-11-22 — Mobile polish round
+
+- Phone nav is a labelled tab bar: icon plus a small label for Home, About, Work, Experience and Contact.
+- Hero name on touch screens: since there is no hover, the outlined letters ink in and fade out once, letter by letter, after the entrance.
+- Collage carousel shows position dots under it; tap a dot to jump to that screenshot.
+- Phones download a 480px portrait (`img/hero-480.png`, 430 KB) via `srcset` instead of the 800px one.
+
+### 2026-11-22 — Structure, signature details, feel, hygiene
+
+**Structure**
+- The standalone "Track record" section is gone. Its two role cards now live in the Experience section in place of the plain job rows, so pipelines and tooling are no longer described in five places.
+- Process and Work use an editorial header: kicker and title on the left, a lead sentence on the right. About, the statement and Experience stay centred, so the variety is deliberate.
+- Process and Experience sit on a light paper band; everything else stays white. Chips inside the bands are white so they keep their contrast.
+
+**Signature details**
+- The collage screenshots come alive when scrolled into view: pipeline steps complete one by one with a pulsing running step, the Terraform plan has a blinking cursor, the pending pod turns green-for-go (black), the grey pod blinks, the deploy bars grow in sequence, the availability line draws itself and the ACR log reveals line by line. The work-card screenshots animate the same way.
+- Two faint orbit rings sit behind the dial, and a dotted hairline connects the active skill pill to the solid (desktop).
+
+**Feel**
+- Smooth, weighted scrolling via Lenis on desktop pointers; nav anchors scroll through it and account for the fixed bar. Off on touch and reduced-motion.
+- A quiet "scroll" cue with a sliding line under the hero copy.
+- Lead paragraphs step up to 1.1rem.
+
+**Hygiene**
+- "Skip to content" link for keyboard users; proper `</head>` and `<body>` tags.
+- Preconnect to the font file host.
+- Branded `404.html` for GitHub Pages.
+
+### 2026-11-22 — Education lens cards
+
+- The two education rows are now photo cards (college and senior secondary) with the institution image, degree, place and years.
+- Hover (or tap on touch) fires a one-shot camera moment: eight aperture blades close over the photo and reopen, the image pulls focus (blur in, sharp out), viewfinder corner marks settle in, and a small EXIF-style caption with the years appears. Built with CSS custom-property animation (`@property`), no library.
+- Real campus photos supplied by Abhishek (`img/edu-scsvmv.jpg` 1400×614, `img/edu-kcp.jpg` 980×475). The cards moved out of the narrow text column into a full-width two-up row under the Experience grid, with 16:9 photos, and the university is named in full: Sri Chandrasekharendra Saraswathi Viswa Mahavidyalaya (SCSVMV University).
+
 ### 2026-11-21 — Azure blue palette
 
 Replaced the original lime / neon-yellow accent with Microsoft Azure blue to match the Azure DevOps positioning.
