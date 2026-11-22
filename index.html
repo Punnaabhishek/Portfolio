@@ -300,6 +300,7 @@ html.lenis, html.lenis body { height: auto; }
 .orbit .pill:hover i, .orbit .pill.on i { box-shadow: 0 0 0 4px color-mix(in srgb, var(--dot) 35%, transparent); }
 @keyframes bob { 50% { transform: translateY(-8px); } }
 .dial { position: relative; width: clamp(260px, 36vw, 460px); aspect-ratio: 1; max-width: 100%; touch-action: none; cursor: grab; user-select: none; -webkit-user-select: none; }
+@media (hover: none) { .dial { touch-action: pan-y pinch-zoom; } }
 .dial.drag { cursor: grabbing; }
 .dial canvas { display: block; width: 100% !important; height: 100% !important; }
 .dial .lbl { position: absolute; left: 50%; bottom: 4px; transform: translateX(-50%); display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: 999px; background: var(--ink); color: var(--ink-fg); font-size: 0.82rem; font-weight: 600; white-space: nowrap; opacity: 0; translate: 0 6px; transition: opacity 250ms, translate 250ms; pointer-events: none; z-index: 1; }
@@ -406,42 +407,48 @@ html.lenis, html.lenis body { height: auto; }
 .hl:hover .hl-list li::before { background: var(--accent-deep); }
 @media (max-width: 760px) { .hl-grid { grid-template-columns: 1fr; } .hl:nth-child(2) { margin-top: 0; } }
 
-/* ---------- works: four case panels that stack as you scroll ---------- */
-.works { padding-block: 40px 120px; }
+/* ---------- works: four case panels side by side, scrolled sideways ---------- */
+.works { padding-block: 40px 100px; }
 .works .h2 { margin-top: 10px; }
-.work-grid { display: grid; gap: 28px; margin-top: 56px; }
-.work { position: sticky; top: calc(var(--nav-h) + 24px); display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); gap: 36px; height: clamp(560px, 76vh, 720px); padding: 40px 40px 40px 48px; border-radius: 30px; background: var(--card); border: 1px solid var(--line); box-shadow: var(--shadow); overflow: hidden; transform-origin: 50% 0; transform: scale(calc(1 - var(--p, 0) * .06)); }
+.work-grid { display: flex; align-items: stretch; gap: 22px; margin: 48px -16px 0; padding: 6px 16px 30px; overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory; scroll-padding: 16px; scrollbar-width: none; -webkit-overflow-scrolling: touch; cursor: grab; }
+.work-grid::-webkit-scrollbar { display: none; }
+.work-grid.dragging { cursor: grabbing; scroll-snap-type: none; scroll-behavior: auto; }
+.work-grid.dragging * { pointer-events: none; }
+.work { position: relative; flex: 0 0 clamp(340px, 46%, 540px); scroll-snap-align: start; display: grid; grid-template-columns: 1fr; grid-template-rows: auto 1fr; gap: 22px; padding: 18px 18px 26px; border-radius: 28px; background: var(--card); border: 1px solid var(--line); box-shadow: var(--shadow); min-width: 0; }
 .work:nth-child(even) { background: var(--bg-soft); }
-.work .w-text { display: flex; flex-direction: column; min-width: 0; }
-.w-top { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
-.w-top .idx { color: var(--fg); font-size: 1.1rem; letter-spacing: 0; }
-.w-top .idx em { font-style: normal; color: var(--muted); font-size: 0.7rem; letter-spacing: .1em; padding-left: 2px; }
-.work h3 { margin-top: 26px; font-size: clamp(1.9rem, 3.3vw, 3.1rem); font-weight: 600; letter-spacing: -0.03em; line-height: 1.02; text-wrap: balance; }
+.work .w-text { display: flex; flex-direction: column; min-width: 0; padding: 0 8px; }
+.w-top { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.w-top .idx { color: var(--fg); font-size: 1.05rem; letter-spacing: 0; }
+.w-top .idx em { font-style: normal; color: var(--muted); font-size: 0.68rem; letter-spacing: .1em; padding-left: 2px; }
+.work h3 { margin-top: 16px; font-size: clamp(1.5rem, 2.1vw, 2rem); font-weight: 600; letter-spacing: -0.03em; line-height: 1.04; text-wrap: balance; }
 .work h3 .serif { font-weight: 400; }
-.work .desc { margin-top: 18px; color: var(--muted); font-size: 1rem; line-height: 1.55; max-width: 46ch; }
-.w-meta { margin: auto 0 0; padding-top: 24px; display: grid; grid-template-columns: 1fr 1.35fr; gap: 24px; border-top: 1px solid var(--line); }
+.work .desc { margin: 12px 0 22px; color: var(--muted); font-size: 0.95rem; line-height: 1.55; max-width: 52ch; }
+.w-meta { margin: auto 0 0; padding-top: 18px; display: grid; grid-template-columns: 1fr 1.25fr; gap: 20px; border-top: 1px solid var(--line); }
 .w-meta > div { min-width: 0; }
-.w-meta dt { font-family: var(--font-mono); font-size: 0.64rem; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
-.w-meta dd { margin: 10px 0 0; font-size: 0.9rem; line-height: 1.5; }
+.w-meta dt { font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+.w-meta dd { margin: 8px 0 0; font-size: 0.88rem; line-height: 1.5; }
 .w-meta dd.chips { display: flex; flex-wrap: wrap; gap: 6px; }
-.w-meta dd.chips span { font-size: 0.74rem; font-weight: 600; padding: 5px 10px; border-radius: 999px; border: 1px solid var(--line); background: var(--bg-soft); }
+.w-meta dd.chips span { font-size: 0.72rem; font-weight: 600; padding: 5px 10px; border-radius: 999px; border: 1px solid var(--line); background: var(--bg-soft); }
 .work:nth-child(even) .w-meta dd.chips span { background: var(--card); }
-.work .frame { height: 100%; min-height: 0; border-radius: 22px; background: var(--bg-soft); border: 1px solid var(--line); overflow: hidden; position: relative; display: grid; place-items: center; padding: 7%; transform: perspective(1200px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)); transition: transform 400ms cubic-bezier(.2,.8,.2,1); }
+.work .frame { order: -1; border-radius: 20px; background: var(--bg-soft); border: 1px solid var(--line); overflow: hidden; position: relative; display: grid; place-items: center; padding: 24px; transform: perspective(1200px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)); transition: transform 400ms cubic-bezier(.2,.8,.2,1); }
 .work:nth-child(even) .frame { background: var(--card); }
 .work .frame.tint { background: linear-gradient(160deg, var(--accent-soft), var(--bg-soft)); }
-.work .frame .shot { position: relative; width: 100%; max-width: 540px; transform: rotate(0); box-shadow: 0 40px 70px -30px rgba(0,0,0,.4); transition: transform 500ms cubic-bezier(.2,.8,.2,1); }
+.work .frame .shot { position: relative; width: 100%; max-width: 460px; transform: rotate(0); box-shadow: 0 40px 70px -30px rgba(0,0,0,.4); transition: transform 500ms cubic-bezier(.2,.8,.2,1); }
 .work:hover .frame .shot { transform: scale(1.03); }
-.work .shot .bar { height: 30px; } .work .shot .bar span { font-size: 0.64rem; }
-.work .shot .body { font-size: 0.8rem; gap: 11px; padding: 14px; }
-.work .shot .ttl { font-size: 0.94rem; } .work .shot .sub { font-size: 0.68rem; }
-.work .shot .mono { font-size: 0.68rem; } .work .shot .kv b { font-size: 1.1rem; } .work .shot .kv small { font-size: 0.64rem; }
-.work .shot .bars { height: 70px; } .work .shot .chip-row span { font-size: 0.64rem; }
-@media (prefers-reduced-motion: reduce) { .work { transform: none; } }
-@media (max-width: 980px) {
-  .work { position: relative; top: auto; height: auto; grid-template-columns: 1fr; gap: 24px; padding: 26px; transform: none; }
-  .work .frame { order: -1; height: auto; aspect-ratio: auto; padding: 22px; }
-  .w-meta { margin-top: 26px; }
-}
+.work .shot .bar { height: 28px; } .work .shot .bar span { font-size: 0.62rem; }
+.work .shot .body { font-size: 0.76rem; gap: 10px; padding: 13px; }
+.work .shot .ttl { font-size: 0.9rem; } .work .shot .sub { font-size: 0.66rem; }
+.work .shot .mono { font-size: 0.66rem; } .work .shot .kv b { font-size: 1.05rem; } .work .shot .kv small { font-size: 0.62rem; }
+.work .shot .bars { height: 64px; } .work .shot .chip-row span { font-size: 0.62rem; }
+.work .shot .pods { grid-template-columns: repeat(12, 1fr); }
+.work .shot .spark { height: 40px; }
+.works .swipe { display: flex; align-items: center; justify-content: center; gap: 16px; margin-top: 6px; }
+.works .swipe .txt { display: none; }
+.works .arr { width: 42px; height: 42px; border-radius: 50%; border: 1px solid var(--line); background: var(--card); color: var(--fg); display: grid; place-items: center; cursor: pointer; transition: background 200ms, color 200ms, border-color 200ms, transform 200ms; }
+.works .arr svg { width: 18px; height: 18px; }
+.works .arr:hover { background: var(--ink); color: var(--ink-fg); border-color: transparent; transform: translateY(-2px); }
+.works .arr[disabled] { opacity: .35; pointer-events: none; }
+@media (max-width: 1100px) { .work { flex-basis: clamp(340px, 56%, 540px); } }
 
 /* ---------- who ---------- */
 section.who { padding-block: 72px 90px; background: var(--bg-soft); }
@@ -679,8 +686,10 @@ footer { padding-block: 56px 24px; background: var(--bg); overflow: hidden; }
 
   /* works: the four panels sit side by side and swipe, like the collage */
   .works { padding-block: 40px 44px; }
-  .work-grid { display: flex; align-items: stretch; gap: 12px; margin: 24px -16px 0; padding: 0 16px 6px; overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory; scroll-padding: 16px; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
-  .work-grid::-webkit-scrollbar { display: none; }
+  .work-grid { gap: 12px; margin: 24px -16px 0; padding: 0 16px 6px; cursor: default; }
+  .works .arr { display: none; }
+  .works .swipe .txt { display: inline; }
+  .works .swipe { margin-top: 14px; }
   .work { flex: 0 0 calc(100% - 28px); scroll-snap-align: start; padding: 14px 14px 18px; border-radius: 22px; gap: 14px; }
   .work .frame { padding: 12px; border-radius: 14px; }
   .work .shot .body { font-size: 0.72rem; gap: 9px; padding: 12px; }
@@ -894,7 +903,7 @@ web:88   <span class="g">pushed</span></div><div class="sub">tagged by build id<
       <div><span class="kicker">Selected Work</span><h2 class="h2">What I've <span class="serif">built</span></h2></div>
       <p class="lead">Four things I'd point to first. Each one shipped on Azure, each one is still running, and each one says what it changed.</p>
     </div>
-    <div class="work-grid" id="caseStack">
+    <div class="work-grid" id="caseStack" data-lenis-prevent>
       <article class="work" style="--i:0">
         <div class="w-text rv">
           <div class="w-top"><span class="idx">01 <em>/ 04</em></span><span class="org">Charles Technologies · 2025 → now</span></div>
@@ -949,7 +958,7 @@ web:88   <span class="g">pushed</span></div><div class="sub">tagged by build id<
         <div class="frame tint"><div class="shot"><div class="bar"><i></i><i></i><i></i><span>grafana · prod</span></div><div class="body"><div class="ttl">Kubernetes Operations</div><div class="pods"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="spark"><svg viewBox="0 0 200 46" preserveAspectRatio="none"><path class="a" d="M0 36 L25 30 L50 32 L75 20 L100 24 L125 12 L150 16 L175 8 L200 10 L200 46 L0 46 Z"/><path class="l" d="M0 36 L25 30 L50 32 L75 20 L100 24 L125 12 L150 16 L175 8 L200 10"/></svg></div><div class="kv"><div><b>3</b><small>environments</small></div><div><b>24/7</b><small>NOC coverage</small></div></div></div></div></div>
       </article>
     </div>
-    <div class="swipe" aria-hidden="true"><span class="dots" id="workDots"></span><span class="txt">swipe <span>→</span></span></div>
+    <div class="swipe works-nav"><button type="button" class="arr" data-dir="-1" aria-label="Previous project"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button><span class="dots" id="workDots" aria-hidden="true"></span><button type="button" class="arr" data-dir="1" aria-label="Next project"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button><span class="txt">swipe <span>→</span></span></div>
   </div>
 </section>
 
@@ -1480,10 +1489,25 @@ web:88   <span class="g">pushed</span></div><div class="sub">tagged by build id<
       });
     }, { passive: true });
   }
-  if (window.matchMedia('(max-width: 760px)').matches) {
-    carousel(document.querySelector('.collage .panel'), document.getElementById('panelDots'), '.shot', 14);
-    carousel(document.getElementById('caseStack'), document.getElementById('workDots'), '.work', 16);
-  }
+  if (window.matchMedia('(max-width: 760px)').matches) carousel(document.querySelector('.collage .panel'), document.getElementById('panelDots'), '.shot', 14);
+  carousel(document.getElementById('caseStack'), document.getElementById('workDots'), '.work', 16);
+
+  /* work row: arrows step one panel; on desktop the row can also be dragged with the mouse */
+  (function () {
+    var row = document.getElementById('caseStack'); if (!row) return;
+    var arrows = Array.prototype.slice.call(document.querySelectorAll('.works .arr'));
+    function stepW() { var c = row.querySelector('.work'); return c ? c.offsetWidth + 22 : row.clientWidth; }
+    function sync() { var max = row.scrollWidth - row.clientWidth - 2; arrows.forEach(function (b) { var d = +b.getAttribute('data-dir'); b.disabled = d < 0 ? row.scrollLeft <= 2 : row.scrollLeft >= max; }); }
+    arrows.forEach(function (b) { b.addEventListener('click', function () { row.scrollBy({ left: stepW() * +b.getAttribute('data-dir'), behavior: 'smooth' }); }); });
+    row.addEventListener('scroll', sync, { passive: true }); window.addEventListener('resize', sync); sync();
+    if (window.matchMedia('(pointer: fine)').matches) {
+      var down = false, sx = 0, sl = 0, movedX = 0;
+      row.addEventListener('mousedown', function (e) { if (e.button !== 0) return; down = true; movedX = 0; sx = e.clientX; sl = row.scrollLeft; });
+      window.addEventListener('mousemove', function (e) { if (!down) return; var dx = e.clientX - sx; if (Math.abs(dx) > 4 && !row.classList.contains('dragging')) row.classList.add('dragging'); if (row.classList.contains('dragging')) { row.scrollLeft = sl - dx; movedX = dx; e.preventDefault(); } });
+      window.addEventListener('mouseup', function () { if (!down) return; down = false; if (row.classList.contains('dragging')) { row.classList.remove('dragging'); var w = stepW(), i = Math.round(row.scrollLeft / w); row.scrollTo({ left: i * w, behavior: 'smooth' }); } });
+      row.addEventListener('dragstart', function (e) { e.preventDefault(); });
+    }
+  })();
 
   /* typical day: on phones the list folds to four steps with a button for the rest */
   Array.prototype.forEach.call(document.querySelectorAll('.day'), function (list) {
@@ -1544,18 +1568,6 @@ web:88   <span class="g">pushed</span></div><div class="sub">tagged by build id<
       fr.addEventListener('mouseleave', function () { fr.style.setProperty('--ry', '0deg'); fr.style.setProperty('--rx', '0deg'); });
     });
   }
-  /* work: each case panel sticks, and scales back a touch as the next one slides over it */
-  var cases = Array.prototype.slice.call(document.querySelectorAll('#caseStack .work'));
-  function stackCases() {
-    if (reduce || !window.matchMedia('(min-width: 981px)').matches) { cases.forEach(function (c) { c.style.removeProperty('--p'); }); return; }
-    for (var i = 0; i < cases.length - 1; i++) {
-      var top = cases[i].getBoundingClientRect().top, next = cases[i + 1].getBoundingClientRect().top;
-      var p = Math.min(1, Math.max(0, 1 - (next - top) / cases[i].offsetHeight));
-      cases[i].style.setProperty('--p', p.toFixed(3));
-    }
-  }
-  window.addEventListener('scroll', stackCases, { passive: true }); window.addEventListener('resize', stackCases); stackCases();
-
   window.addEventListener('scroll', function () { onScroll(); onNav(); }, { passive: true }); onScroll(); onNav();
 
   /* footer name: letters fill solid as the footer scrolls into view, and empty again on the way back up */
