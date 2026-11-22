@@ -142,6 +142,40 @@ Email, phone and LinkedIn each appeared four or five times. Now each has one cle
 - **Contact panel:** replaces the plain band. A light rounded panel with a cursor-following spotlight: on the left a kicker, headline, short pitch, availability dot and a live Chennai clock; on the right a card with Email (primary, black), Call and LinkedIn rows that lift on hover.
 - **Footer:** the contact section no longer forces a full screen height, so the empty space above the giant name is gone; footer top padding reduced; filled letters flip back to outline when hovered.
 
+### 2026-11-22 — Finish and depth pass
+
+**Finish**
+- Share-ready: page description, "AP" monogram favicon, canonical URL, Open Graph and Twitter cards with a rendered 1200×630 preview (`img/og.png`) pointing at the GitHub Pages URL.
+- Images: photo card is now a 640px JPEG (952 KB → 43 KB) and the hero portrait is 800px wide (1.8 MB → 1.2 MB); hero loads with high priority, the photo card lazily. Unused `img/avatar.png` removed.
+- Résumé row added to the contact card, hidden until `Abhishek-Punna-Resume.pdf` is placed in the repo root.
+- About section gets a kicker, heading and one-line intro above the collage.
+- Skills regrouped into five labelled rows: Cloud, CI / CD, Containers & IaC, Observability, Security & Automation.
+- Hero portrait fades softly into the page at the bottom.
+- LinkedIn links point to the real profile.
+
+**Depth**
+- Hero name letters draw in one by one on first load.
+- Collage screenshots drift at different depths as the cursor moves.
+- Work cards tilt toward the cursor in 3D.
+- Nav links get an animated underline; the marquee pauses on hover; a 2px scroll-progress line runs along the top.
+- Contact card: the three rows share one white style and invert to black on hover; the duplicate "Available for new opportunities" line is removed from the panel (it lives in the nav pill).
+
+### 2026-11-22 — Things you can feel
+
+- One clock: the live Chennai time stays in the contact panel and leaves the footer line.
+- Custom cursor on desktop: a dot with a lagging ring that grows over anything clickable, shrinks on press, and turns into a white "drag" badge over the dial and a "tilt" badge over work cards. Inverts over dark surfaces. Off for touch devices and reduced-motion.
+- Hero reacts to the mouse: the portrait and the name drift in opposite directions, and each outlined letter of ABHISHEK fills black while the pointer is over it.
+- Numbers count up the first time they scroll into view (hero stats and the figures inside the mock screenshots).
+- Section headings wipe in from the top as their block reveals.
+- Hero portrait: removed the drop shadow. Its soft halo beside the shoulders read as a faint grey box on some monitors; the image itself was verified fully transparent around the figure.
+
+### 2026-11-22 — Résumé and content from the CV
+
+- `Abhishek-Punna-Resume.pdf` added to the repo root and the "Download CV" row in the contact card switched on.
+- Highlight cards rebuilt as honest role cards: company, title, dates, and five bullets each taken from the résumé (Charles Technologies 2025 → now, Awan Infotech 2021 → 2025). The quote-mark and tick styling that made them look like testimonials is gone.
+- Work card descriptions expanded with the résumé's specifics: Azure CLI steps, Entra ID service connections, pull-request workflow for infrastructure, App Store and Play Store release automation, root-cause analysis.
+- Skills: new "Platforms & ITSM" row (Rackspace, SendGrid, Ivanti) and a "Languages" row (English, Telugu).
+
 ### 2026-11-21 — Azure blue palette
 
 Replaced the original lime / neon-yellow accent with Microsoft Azure blue to match the Azure DevOps positioning.
