@@ -219,6 +219,7 @@ Email, phone and LinkedIn each appeared four or five times. Now each has one cle
 ### 2026-11-22 — Phone scroll fix at the skill dial
 
 - The dial used `touch-action: none` so it could be dragged, which on a phone also swallowed vertical swipes that began on it and made the page feel stuck. On touch screens it now allows vertical panning and pinch zoom; a sideways drag still rotates it.
+- Second pass: on touch the dial no longer takes the pointer on contact. It waits for a clearly sideways move (10px, more horizontal than vertical) before it starts rotating; a vertical swipe is left to the browser, so the page scrolls. Touch action is also set inline on the dial and its canvas. A tap still selects the face under the finger.
 
 ### 2026-11-22 — Work panels side by side on desktop too
 

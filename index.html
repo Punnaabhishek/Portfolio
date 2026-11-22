@@ -1302,8 +1302,23 @@ web:88   <span class="g">pushed</span></div><div class="sub">tagged by build id<
     var p = Math.floor(hit.faceIndex / PER);
     return skillOfPent[p] !== undefined ? skillOfPent[p] : -1;
   }
-  host.addEventListener('pointerdown', function (e) { dragging = true; moved = false; host.classList.add('drag'); lx = e.clientX; ly = e.clientY; targetQ = null; vx = vy = 0; try { host.setPointerCapture(e.pointerId); } catch (err) {} });
+  /* touch: the page must keep scrolling. A finger only takes the dial after a clearly sideways move;
+     a vertical swipe is left to the browser, which scrolls the page and cancels the pointer. */
+  var pending = false, sx0 = 0, sy0 = 0;
+  host.style.touchAction = 'pan-y pinch-zoom';
+  Array.prototype.forEach.call(host.querySelectorAll('canvas'), function (c) { c.style.touchAction = 'pan-y pinch-zoom'; });
+  function beginDrag(e) { dragging = true; pending = false; moved = false; host.classList.add('drag'); lx = e.clientX; ly = e.clientY; targetQ = null; vx = vy = 0; try { host.setPointerCapture(e.pointerId); } catch (err) {} }
+  host.addEventListener('pointerdown', function (e) {
+    if (e.pointerType === 'touch') { pending = true; sx0 = e.clientX; sy0 = e.clientY; moved = false; return; }
+    beginDrag(e);
+  });
   host.addEventListener('pointermove', function (e) {
+    if (pending) {
+      var px = e.clientX - sx0, py = e.clientY - sy0;
+      if (Math.abs(py) > Math.abs(px) && Math.abs(py) > 6) { pending = false; return; }
+      if (Math.abs(px) > 10 && Math.abs(px) > Math.abs(py)) beginDrag(e);
+      return;
+    }
     if (dragging) {
       var dx = e.clientX - lx, dy = e.clientY - ly; lx = e.clientX; ly = e.clientY;
       if (Math.abs(dx) + Math.abs(dy) > 1) moved = true;
@@ -1314,10 +1329,11 @@ web:88   <span class="g">pushed</span></div><div class="sub">tagged by build id<
     }
   });
   host.addEventListener('pointerup', function (e) {
+    var tap = pending && !moved; pending = false;
     dragging = false; host.classList.remove('drag'); lastMove = performance.now(); nextStep = lastMove + 3200;
-    if (!moved) { var i = pick(e); if (i >= 0) { select(i); rotateToSkill(i); } }
+    if (!moved || tap) { var i = pick(e); if (i >= 0) { select(i); rotateToSkill(i); } }
   });
-  host.addEventListener('pointercancel', function () { dragging = false; host.classList.remove('drag'); });
+  host.addEventListener('pointercancel', function () { pending = false; dragging = false; host.classList.remove('drag'); });
   host.addEventListener('pointerleave', function () { host.style.cursor = ''; });
 
   /* pills drift toward the cursor on desktop */
