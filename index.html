@@ -69,15 +69,14 @@ p { margin: 0; }
 .nav.scrolled { border-bottom-color: var(--line); box-shadow: 0 12px 30px -26px rgba(0,0,0,.4); }
 @keyframes navIn { from { opacity: 0; transform: translateY(-12px); } to { opacity: 1; transform: none; } }
 .nav .wrap { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 16px; height: 76px; }
-.nav .avail { justify-self: start; }
+.nav .wrap::after { content: ""; }
+.nav .avail { justify-self: start; white-space: nowrap; }
 .nav ul { display: flex; align-items: center; gap: 6px; list-style: none; margin: 0; padding: 0; }
 .nav ul a { display: inline-flex; align-items: baseline; gap: 7px; text-decoration: none; font-size: 0.95rem; font-weight: 500; color: var(--fg); padding: 10px 16px; border-radius: 999px; white-space: nowrap; transition: background 200ms, color 200ms; }
 .nav ul a small { font-family: var(--font-mono); font-size: 0.68rem; color: var(--muted); }
 .nav ul a svg { display: none; width: 20px; height: 20px; flex: none; }
 .nav ul a:hover { background: var(--bg-soft); }
 .nav ul a.active { font-weight: 700; }
-.nav .nav-cta { justify-self: end; padding: 12px 20px; font-size: 0.9rem; }
-.nav .nav-cta svg { width: 14px; height: 14px; }
 @media (max-width: 900px) { .nav .avail { display: none; } .nav .wrap { grid-template-columns: auto 1fr auto; } .nav ul { justify-self: start; } }
 @media (max-width: 640px) {
   .nav .wrap { height: 64px; }
@@ -86,8 +85,6 @@ p { margin: 0; }
   .nav ul a svg { display: block; }
   .nav ul a { padding: 10px; align-items: center; }
   .nav ul a.active { background: var(--bg-soft); }
-  .nav .nav-cta span { display: none; }
-  .nav .nav-cta { padding: 0; width: 42px; height: 42px; justify-content: center; }
 }
 
 /* ---------- hero ---------- */
@@ -102,10 +99,10 @@ p { margin: 0; }
 .stage .right { display: grid; gap: 10px; justify-items: end; padding-bottom: 48px; animation: fade 900ms 650ms both; }
 .stage .role { font-size: clamp(1.5rem, 2.6vw, 2.1rem); font-weight: 600; letter-spacing: -0.02em; }
 .stage .blurb { max-width: 28ch; font-size: 0.98rem; color: var(--muted); }
-.soc-pill { display: inline-flex; align-items: center; gap: 10px; padding: 11px 18px; border-radius: 999px; background: var(--card); border: 1px solid var(--line); color: var(--fg); text-decoration: none; font-weight: 600; font-size: 0.92rem; box-shadow: 0 8px 20px -16px rgba(0,0,0,.4); transition: transform 200ms, background 200ms, color 200ms, border-color 200ms; }
-.soc-pill svg, .soc-pill .ico { width: 18px; height: 18px; }
 .ico { display: block; border-radius: 4px; flex: none; }
-.soc-pill:hover { background: var(--ink); color: var(--ink-fg); border-color: transparent; transform: translateY(-2px); }
+.stat { display: inline-flex; align-items: baseline; gap: 9px; padding: 10px 16px; border-radius: 999px; background: var(--card); border: 1px solid var(--line); color: var(--muted); font-size: 0.88rem; font-weight: 500; box-shadow: 0 8px 20px -16px rgba(0,0,0,.4); white-space: nowrap; transition: transform 200ms, border-color 200ms; }
+.stat b { font-family: var(--font-mono); font-weight: 500; font-size: 1.05rem; color: var(--fg); letter-spacing: -0.02em; }
+.stat:hover { transform: translateY(-2px); border-color: var(--fg); }
 .portrait { position: relative; z-index: 1; width: clamp(240px, 34vw, 400px); animation: rise 1000ms 300ms cubic-bezier(.2,.8,.2,1) both; }
 .portrait img { width: 100%; height: auto; display: block; filter: drop-shadow(0 24px 32px rgba(0,0,0,.18)); }
 @keyframes rise { from { opacity: 0; transform: translateY(60px); } to { opacity: 1; transform: none; } }
@@ -300,10 +297,7 @@ section.who .h2 { margin-top: 10px; }
 .photo-card .img img { width: 100%; height: 100%; display: block; object-fit: cover; object-position: center top; transition: transform 600ms cubic-bezier(.2,.8,.2,1); }
 .photo-card:hover .img img { transform: scale(1.04); }
 .photo-card .foot { display: flex; align-items: center; justify-content: space-between; padding: 14px 6px 2px; }
-.photo-card .foot .soc { display: flex; gap: 10px; }
-.photo-card .foot .soc a { width: 30px; height: 30px; border-radius: 50%; border: 1px solid var(--line); display: grid; place-items: center; color: var(--fg); text-decoration: none; transition: background 200ms; }
-.photo-card .foot .soc a:hover { background: var(--accent); color: var(--on-accent); border-color: transparent; }
-.photo-card .foot .soc svg, .photo-card .foot .soc .ico { width: 16px; height: 16px; }
+.photo-card .foot .loc { font-size: 0.78rem; color: var(--muted); font-family: var(--font-mono); letter-spacing: .04em; }
 .photo-card .foot .nm { text-align: right; font-size: 0.85rem; line-height: 1.3; }
 .photo-card .foot .nm b { display: block; font-family: var(--font-display); font-style: italic; font-weight: 400; font-size: 1.15rem; }
 .photo-card .foot .nm span { color: var(--muted); font-size: 0.75rem; }
@@ -324,25 +318,44 @@ section.who .h2 { margin-top: 10px; }
 @media (max-width: 860px) { .who-grid { grid-template-columns: 1fr; } .photo-card { max-width: 420px; margin: 0 auto; } }
 @media (max-width: 520px) { .ledger .row { grid-template-columns: 1fr auto; } .ledger .row span { grid-column: 1 / -1; margin-top: -8px; font-size: 0.82rem; } }
 
-/* ---------- cta band ---------- */
+/* ---------- contact panel ---------- */
 .cta-band { padding-block: 40px 0; }
-.cta-band .inner { background: radial-gradient(900px 400px at 50% 110%, var(--accent-glow) 0%, color-mix(in srgb, var(--accent-glow) 50%, var(--bg)) 40%, var(--bg) 75%); text-align: center; padding-block: 90px 60px; display: grid; justify-items: center; gap: 16px; }
-.cta-band h2 { font-size: clamp(2.4rem, 6vw, 4.2rem); font-weight: 500; letter-spacing: -0.03em; }
-.cta-band p { max-width: 48ch; color: var(--fg); font-size: 1rem; }
-.contact-rows { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin-top: 8px; }
-.copy { display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border-radius: 999px; border: 1px solid color-mix(in srgb, var(--fg) 18%, transparent); background: color-mix(in srgb, var(--bg) 70%, transparent); color: var(--fg); font-family: inherit; font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: background 200ms; text-decoration: none; }
-.copy:hover { background: var(--bg); }
-.copy.ok { border-color: var(--accent-deep); }
-.copy svg, .copy .ico { width: 16px; height: 16px; }
+.contact { position: relative; overflow: hidden; display: grid; grid-template-columns: 1.15fr 0.85fr; gap: clamp(28px, 5vw, 72px); align-items: center; padding: clamp(32px, 5vw, 64px); border-radius: 32px; background: var(--bg-soft); border: 1px solid var(--line); --sx: 50%; --sy: 50%; }
+.contact::before { content: ""; position: absolute; inset: 0; background: radial-gradient(560px 380px at var(--sx) var(--sy), rgba(0,0,0,.07), transparent 70%); opacity: 0; transition: opacity 400ms; pointer-events: none; }
+.contact:hover::before { opacity: 1; }
+.contact > * { position: relative; }
+.contact .kicker { text-align: left; }
+.contact h2 { font-size: clamp(1.9rem, 3.6vw, 2.9rem); font-weight: 500; margin-top: 10px; text-align: left; }
+.contact h2 .serif { color: var(--muted); }
+.contact > .c-left > p { color: var(--muted); max-width: 46ch; margin-top: 14px; font-size: 1rem; }
+.c-meta { display: flex; flex-wrap: wrap; gap: 10px 22px; margin-top: 22px; font-size: 0.88rem; font-weight: 600; }
+.c-meta span { display: inline-flex; align-items: center; gap: 8px; }
+.c-meta .dot { width: 8px; height: 8px; border-radius: 50%; background: #22c55e; box-shadow: 0 0 0 4px rgba(34,197,94,.25); animation: pulse 2s infinite; }
+.c-meta b { font-family: var(--font-mono); font-weight: 500; font-variant-numeric: tabular-nums; }
+.c-card { display: grid; gap: 10px; }
+.c-row { display: flex; align-items: center; gap: 14px; padding: 16px 18px; border-radius: 18px; background: var(--card); border: 1px solid var(--line); color: var(--fg); text-decoration: none; transition: transform 250ms, box-shadow 250ms, border-color 250ms; }
+.c-row .ico { width: 38px; height: 38px; border-radius: 11px; flex: none; background: #fff; padding: 7px; box-sizing: border-box; border: 1px solid var(--line); }
+.c-row span { display: grid; gap: 2px; min-width: 0; flex: 1; }
+.c-row small { font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.c-row b { font-weight: 600; font-size: 0.98rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.c-row svg { width: 18px; height: 18px; flex: none; color: var(--muted); transition: transform 250ms, color 250ms; }
+.c-row:hover { transform: translateY(-3px); box-shadow: var(--shadow); border-color: var(--fg); }
+.c-row:hover svg { transform: translate(2px, -2px); color: var(--fg); }
+.c-row.primary { background: var(--ink); color: var(--ink-fg); border-color: transparent; }
+.c-row.primary small { color: rgba(255,255,255,.6); }
+.c-row.primary svg { color: rgba(255,255,255,.7); }
+.c-row.primary:hover svg { color: #fff; }
+.c-row.primary .ico { border-color: transparent; }
+@media (max-width: 860px) { .contact { grid-template-columns: 1fr; } }
 
 /* ---------- footer: giant name that fills in as you scroll ---------- */
-footer { padding-block: 72px 24px; background: var(--bg); overflow: hidden; }
+footer { padding-block: 56px 24px; background: var(--bg); overflow: hidden; }
 .bigname { font-family: var(--font-body); font-weight: 800; text-transform: uppercase; line-height: 0.86; letter-spacing: 0.01em; font-size: clamp(3rem, 14.2vw, 15rem); display: grid; gap: 0.04em; user-select: none; -webkit-user-select: none; }
 .bigname .w { display: flex; }
 .bigname .w.r { justify-content: flex-end; }
 .bigname i { font-style: normal; color: transparent; -webkit-text-stroke: 2px var(--fg); transition: color 520ms cubic-bezier(.2,.8,.2,1), transform 320ms cubic-bezier(.2,.8,.2,1); }
 .bigname i.on { color: var(--fg); }
-.bigname i:hover { transform: translateY(-0.06em); }
+.bigname i:hover { transform: translateY(-0.06em); color: transparent; }
 @supports not (-webkit-text-stroke: 1px #000) { .bigname i { color: var(--line); } }
 .fline { display: flex; align-items: center; justify-content: space-between; gap: 14px 24px; flex-wrap: wrap; border-top: 1px solid var(--line); margin-top: 40px; padding-top: 22px; font-size: 0.85rem; color: var(--muted); }
 .fline .meta { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
@@ -360,9 +373,8 @@ footer { padding-block: 72px 24px; background: var(--bg); overflow: hidden; }
 @media (max-width: 640px) { :root { --nav-h: 64px; } }
 #about, #works, #who, #contact { scroll-margin-top: calc(env(safe-area-inset-top, 0px) + var(--nav-h)); }
 @media (min-width: 641px) {
-  #about, #works, #who, #contact { min-height: calc(100vh - var(--nav-h)); min-height: calc(100svh - var(--nav-h)); display: grid; align-content: center; }
+  #about, #works, #who { min-height: calc(100vh - var(--nav-h)); min-height: calc(100svh - var(--nav-h)); display: grid; align-content: center; }
   #about, #works, #who { padding-block: 48px; }
-  #contact { padding-block: 0; }
 }
 
 /* ---------- phone layout (≤ 760px): one consistent rhythm ---------- */
@@ -373,12 +385,13 @@ footer { padding-block: 72px 24px; background: var(--bg); overflow: hidden; }
   .process { padding-block: 40px 56px; }
   .highlights { padding-block: 0 56px; }
   .works, section.who { padding-block: 32px 56px; }
-  .cta-band { padding-block: 24px 0; }
+  .cta-band { padding-block: 16px 0; }
   .kicker { font-size: 1.05rem; }
   .h2 { font-size: clamp(2rem, 8.4vw, 2.6rem); }
 
   /* nav: icons spread evenly, call-to-action stays a round button */
-  .nav .wrap { grid-template-columns: 1fr auto; gap: 10px; }
+  .nav .wrap { grid-template-columns: 1fr; gap: 0; }
+  .nav .wrap::after { display: none; }
   .nav ul { width: 100%; justify-content: space-between; gap: 0; }
   .nav ul a { padding: 10px; }
 
@@ -390,8 +403,8 @@ footer { padding-block: 72px 24px; background: var(--bg); overflow: hidden; }
   .stage .left { gap: 10px; }
   .stage .role { font-size: 1.7rem; }
   .stage .blurb { font-size: 0.95rem; max-width: 36ch; }
-  .stage .right { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 100%; max-width: 420px; padding-bottom: 32px; justify-items: stretch; }
-  .soc-pill { justify-content: center; padding: 12px 14px; }
+  .stage .right { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; width: 100%; padding-bottom: 32px; }
+  .stat { padding: 9px 14px; font-size: 0.84rem; }
 
   /* marquee */
   .marquee { padding-block: 16px; }
@@ -441,8 +454,9 @@ footer { padding-block: 72px 24px; background: var(--bg); overflow: hidden; }
   .ledger .row { padding: 14px 0; }
 
   /* cta */
-  .cta-band .inner { padding-block: 64px 44px; }
-  .cta-band h2 { font-size: clamp(2.2rem, 10vw, 3rem); }
+  .contact { padding: 24px 18px; border-radius: 22px; gap: 22px; }
+  .contact h2 { font-size: 1.6rem; }
+  .c-row { padding: 14px 14px; }
 
   /* footer: name flush left on both lines, compact bottom line */
   footer { padding-block: 48px 20px; }
@@ -475,9 +489,6 @@ footer { padding-block: 72px 24px; background: var(--bg); overflow: hidden; }
       <li><a href="#who"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M3 12h18"/></svg><span>Experience</span><small>[5y+]</small></a></li>
       <li><a href="#contact"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg><span>Contact</span></a></li>
     </ul>
-    <a class="btn nav-cta" href="mailto:punnaabhishek9@gmail.com?subject=Hello%20Abhishek"><span>Let's Talk</span>
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M8 7h9v9"/></svg>
-    </a>
   </div>
 </nav>
 
@@ -493,10 +504,8 @@ footer { padding-block: 72px 24px; background: var(--bg); overflow: hidden; }
         <img src="img/hero.png" alt="Abhishek Punna" width="1000" height="1339">
       </div>
       <div class="right">
-        <a class="soc-pill" href="https://www.linkedin.com/" target="_blank" rel="noopener"><img class="ico" src="img/linkedin.svg" alt="" width="24" height="24">LinkedIn</a>
-        <a class="soc-pill" href="mailto:punnaabhishek9@gmail.com?subject=Hello%20Abhishek"><img class="ico" src="img/gmail.svg" alt="" width="24" height="24">Email</a>
-        <a class="soc-pill" href="tel:+919912511744"><img class="ico" src="img/phone.svg" alt="" width="24" height="24">Call</a>
-        <a class="soc-pill" href="#works"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M3 12h18"/></svg>Portfolio</a>
+        <span class="stat"><b>5+</b>years on Azure</span>
+        <span class="stat"><b>3</b>environments run</span>
       </div>
     </div>
     <div class="hero-base"></div>
@@ -671,10 +680,7 @@ web:88   <span class="g">pushed</span></div><div class="sub">tagged by build id<
           <img src="img/card.png" alt="Abhishek Punna" width="900" height="900">
         </div>
         <div class="foot">
-          <div class="soc">
-            <a href="https://www.linkedin.com/" target="_blank" rel="noopener" aria-label="LinkedIn"><img class="ico" src="img/linkedin.svg" alt="" width="24" height="24"></a>
-            <a href="mailto:punnaabhishek9@gmail.com?subject=Hello%20Abhishek" aria-label="Email"><img class="ico" src="img/gmail.svg" alt="" width="24" height="24"></a>
-          </div>
+          <span class="loc">Chennai, India</span>
           <div class="nm"><b>Abhishek Punna</b><span>Azure DevOps Engineer</span></div>
         </div>
       </div>
@@ -699,14 +705,21 @@ web:88   <span class="g">pushed</span></div><div class="sub">tagged by build id<
 </section>
 
 <section class="cta-band" id="contact">
-  <div class="inner">
-    <div class="wrap rv" style="display:grid;justify-items:center;gap:16px">
-      <h2>Let's Make It Happen</h2>
-      <p>Always open to new opportunities in Azure DevOps, cloud engineering and platform work. Let's build a release process your team can trust.</p>
-      <div class="contact-rows" id="contact-email">
-        <a class="copy" href="mailto:punnaabhishek9@gmail.com?subject=Hello%20Abhishek"><img class="ico" src="img/gmail.svg" alt="" width="24" height="24"><span>punnaabhishek9@gmail.com</span></a>
-        <a class="copy" href="tel:+919912511744"><img class="ico" src="img/phone.svg" alt="" width="24" height="24"><span>+91 99125 11744</span></a>
-        <a class="copy" href="https://www.linkedin.com/" target="_blank" rel="noopener"><img class="ico" src="img/linkedin.svg" alt="" width="24" height="24"><span>LinkedIn</span></a>
+  <div class="wrap">
+    <div class="contact rv" id="contactPanel">
+      <div class="c-left">
+        <span class="kicker">Contact</span>
+        <h2>Let's build a release process <span class="serif">your team can trust.</span></h2>
+        <p>Open to Azure DevOps, cloud engineering and platform roles. Tell me what you're shipping and where it hurts, and I'll come back with a plan.</p>
+        <div class="c-meta">
+          <span><i class="dot"></i>Available for new opportunities</span>
+          <span>Chennai, India · <b id="clock2">--:--</b> IST</span>
+        </div>
+      </div>
+      <div class="c-card">
+        <a class="c-row primary" href="mailto:punnaabhishek9@gmail.com?subject=Hello%20Abhishek"><img class="ico" src="img/gmail.svg" alt="" width="24" height="24"><span><small>Email</small><b>punnaabhishek9@gmail.com</b></span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M8 7h9v9"/></svg></a>
+        <a class="c-row" href="tel:+919912511744"><img class="ico" src="img/phone.svg" alt="" width="24" height="24"><span><small>Call</small><b>+91 99125 11744</b></span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M8 7h9v9"/></svg></a>
+        <a class="c-row" href="https://www.linkedin.com/" target="_blank" rel="noopener"><img class="ico" src="img/linkedin.svg" alt="" width="24" height="24"><span><small>LinkedIn</small><b>Abhishek Punna</b></span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M8 7h9v9"/></svg></a>
       </div>
     </div>
   </div>
@@ -725,8 +738,6 @@ web:88   <span class="g">pushed</span></div><div class="sub">tagged by build id<
       </div>
       <div class="links">
         <a href="https://www.linkedin.com/" target="_blank" rel="noopener" aria-label="LinkedIn"><img class="ico" src="img/linkedin.svg" alt="" width="24" height="24"><span>LinkedIn</span></a>
-        <a href="mailto:punnaabhishek9@gmail.com?subject=Hello%20Abhishek" aria-label="Email"><img class="ico" src="img/gmail.svg" alt="" width="24" height="24"><span>Email</span></a>
-        <a href="tel:+919912511744" aria-label="Call"><img class="ico" src="img/phone.svg" alt="" width="24" height="24"><span>Call</span></a>
         <a class="top" href="#top" aria-label="Back to top"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg></a>
       </div>
     </div>
@@ -764,7 +775,7 @@ web:88   <span class="g">pushed</span></div><div class="sub">tagged by build id<
   renderer.setSize(host.clientWidth, host.clientHeight);
   host.insertBefore(renderer.domElement, host.firstChild);
   var scene = new THREE.Scene();
-  var camera = new THREE.PerspectiveCamera(30, 1, 0.1, 100); camera.position.set(0, 0, 8.2);
+  var camera = new THREE.PerspectiveCamera(30, 1, 0.1, 100); camera.position.set(0, 0, 9.9);
   scene.add(new THREE.HemisphereLight(0xffffff, 0xcfd3d7, 0.95));
   var key = new THREE.DirectionalLight(0xffffff, 0.7); key.position.set(3, 4, 5); scene.add(key);
   var fill = new THREE.DirectionalLight(0xffffff, 0.25); fill.position.set(-4, -2, 3); scene.add(fill);
@@ -985,6 +996,14 @@ web:88   <span class="g">pushed</span></div><div class="sub">tagged by build id<
     catch (e) { clockEl.textContent = new Date().toTimeString().slice(0, 5); }
   }
   tick(); setInterval(tick, 15000);
+  var clock2 = document.getElementById('clock2');
+  if (clock2) { var mirror = function () { clock2.textContent = clockEl.textContent; }; mirror(); setInterval(mirror, 15000); }
+
+  /* contact panel: soft spotlight follows the cursor */
+  var panel = document.getElementById('contactPanel');
+  if (panel && window.matchMedia('(pointer: fine)').matches) {
+    panel.addEventListener('mousemove', function (e) { var r = panel.getBoundingClientRect(); panel.style.setProperty('--sx', ((e.clientX - r.left) / r.width * 100) + '%'); panel.style.setProperty('--sy', ((e.clientY - r.top) / r.height * 100) + '%'); });
+  }
 
   /* active nav */
   var links = Array.prototype.slice.call(document.querySelectorAll('#navList a'));
@@ -1011,16 +1030,6 @@ web:88   <span class="g">pushed</span></div><div class="sub">tagged by build id<
     window.addEventListener('scroll', fillName, { passive: true }); window.addEventListener('resize', fillName); fillName();
   }
 
-  /* copy buttons */
-  Array.prototype.forEach.call(document.querySelectorAll('button.copy'), function (b) {
-    var label = b.querySelector('span'), orig = label.textContent;
-    b.addEventListener('click', function () {
-      var text = b.getAttribute('data-copy');
-      function done() { label.textContent = 'Copied!'; b.classList.add('ok'); setTimeout(function () { label.textContent = orig; b.classList.remove('ok'); }, 1800); }
-      function fallback() { var range = document.createRange(); range.selectNodeContents(label); var sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(range); }
-      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done, fallback); else fallback();
-    });
-  });
 })();
 </script>
 

@@ -123,6 +123,25 @@ A dedicated phone stylesheet block replaces the earlier patchwork of per-section
 - Runtime (headless Edge, 1280 and 390px): Three.js loads, dial reacts to pill hover and dot clicks, nav highlight and sticky bar work, clock and year populate, zero console errors.
 - Fixed: the footer name only filled 9 of 13 letters at the bottom of a desktop-height page; the fill now completes once the name is fully in view.
 
+### 2026-11-22 — Fewer contact links
+
+Email, phone and LinkedIn each appeared four or five times. Now each has one clear home.
+
+- **Hero:** the four contact pills are replaced by three proof stats (5+ years on Azure, 3 environments run, 24/7 NOC coverage).
+- **Photo card:** the LinkedIn / email icons give way to a small "Chennai, India" label.
+- **Contact band:** one big black button with the email address, plus a quiet line for the phone number and LinkedIn. This is the contact section.
+- **Footer:** LinkedIn and back-to-top only.
+- **Nav:** "Let's Talk" stays as the always-visible way to email.
+- Removed the dead copy-to-clipboard script that targeted buttons no longer in the page.
+
+### 2026-11-22 — Contact panel, nav button removed, dial and footer fixes
+
+- **Hero:** two proof stats (5+ years on Azure, 3 environments run); the 24/7 one is gone.
+- **Nav:** the "Let's Talk" button is removed; the Contact link leads to the contact panel.
+- **Dial:** camera moved back so the solid and its labels never clip at the top and bottom on smaller windows.
+- **Contact panel:** replaces the plain band. A light rounded panel with a cursor-following spotlight: on the left a kicker, headline, short pitch, availability dot and a live Chennai clock; on the right a card with Email (primary, black), Call and LinkedIn rows that lift on hover.
+- **Footer:** the contact section no longer forces a full screen height, so the empty space above the giant name is gone; footer top padding reduced; filled letters flip back to outline when hovered.
+
 ### 2026-11-21 — Azure blue palette
 
 Replaced the original lime / neon-yellow accent with Microsoft Azure blue to match the Azure DevOps positioning.
