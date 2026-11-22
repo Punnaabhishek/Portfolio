@@ -375,6 +375,21 @@ html.lenis, html.lenis body { height: auto; }
 .roles .hl:hover { transform: none; border-color: var(--fg); }
 .roles .hl-list { margin-top: 14px; gap: 9px; }
 .roles .hl-list li { font-size: 0.92rem; }
+.hl-tabs { display: inline-flex; gap: 4px; padding: 4px; background: var(--bg-soft); border: 1px solid var(--line); border-radius: 999px; margin-top: 16px; }
+.hl-tabs button { border: 0; background: transparent; font: inherit; font-size: 0.78rem; font-weight: 600; padding: 7px 13px; border-radius: 999px; color: var(--muted); cursor: pointer; transition: background 200ms, color 200ms; }
+.hl-tabs button:hover { color: var(--fg); }
+.hl-tabs button.on { background: var(--ink); color: var(--ink-fg); }
+.day { list-style: none; margin: 16px 0 0; padding: 0; display: grid; }
+.day li { position: relative; display: grid; grid-template-columns: 54px 1fr; gap: 14px; padding: 9px 0; font-size: 0.92rem; line-height: 1.5; color: var(--muted); }
+.day li .t { font-family: var(--font-mono); font-size: 0.74rem; color: var(--fg); padding-top: 3px; letter-spacing: .02em; }
+.day li > span:last-child { border-left: 1px solid var(--line); padding-left: 16px; }
+.day li > span:last-child::before { content: ""; position: absolute; left: 64.5px; top: 16px; width: 8px; height: 8px; border-radius: 50%; background: var(--fg); box-shadow: 0 0 0 3px var(--card); }
+.day li:hover > span:last-child { color: var(--fg); }
+.day code { font-family: var(--font-mono); font-size: 0.8em; background: var(--bg-soft); padding: 1px 6px; border-radius: 5px; color: var(--fg); }
+.day.shift li { grid-template-columns: 60px 1fr; }
+.day.shift li > span:last-child::before { left: 70.5px; }
+.day.shift li .t { text-transform: uppercase; font-size: 0.66rem; letter-spacing: .14em; padding-top: 5px; }
+@media (max-width: 520px) { .day li { grid-template-columns: 48px 1fr; gap: 12px; } .day li > span:last-child::before { left: 56.5px; } .day.shift li { grid-template-columns: 54px 1fr; } .day.shift li > span:last-child::before { left: 62.5px; } }
 .highlights .h2 { margin-top: 10px; }
 .highlights .hl-grid { margin-top: 44px; }
 .hl-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
@@ -388,23 +403,42 @@ html.lenis, html.lenis body { height: auto; }
 .hl:hover .hl-list li::before { background: var(--accent-deep); }
 @media (max-width: 760px) { .hl-grid { grid-template-columns: 1fr; } .hl:nth-child(2) { margin-top: 0; } }
 
-/* ---------- works ---------- */
-.works { padding-block: 40px 90px; }
+/* ---------- works: four case panels that stack as you scroll ---------- */
+.works { padding-block: 40px 120px; }
 .works .h2 { margin-top: 10px; }
-.work-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 36px 28px; margin-top: 52px; }
-.work { display: grid; gap: 14px; text-decoration: none; }
-.work .frame { aspect-ratio: 16 / 11; border-radius: 22px; background: var(--bg-soft); border: 1px solid var(--line); overflow: hidden; position: relative; display: grid; place-items: center; padding: 10%; transition: transform 500ms cubic-bezier(.2,.8,.2,1); }
-.work .frame { transform: perspective(1000px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateY(var(--lift, 0px)); transition: transform 400ms cubic-bezier(.2,.8,.2,1); }
-.work:hover .frame { --lift: -6px; }
-.work .frame .shot { position: relative; width: 100%; transform: rotate(0); box-shadow: 0 30px 50px -24px rgba(0,0,0,.35); transition: transform 500ms cubic-bezier(.2,.8,.2,1); }
-.work:hover .frame .shot { transform: scale(1.03); }
+.work-grid { display: grid; gap: 28px; margin-top: 56px; }
+.work { position: sticky; top: calc(var(--nav-h) + 24px); display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); gap: 36px; height: clamp(560px, 76vh, 720px); padding: 40px 40px 40px 48px; border-radius: 30px; background: var(--card); border: 1px solid var(--line); box-shadow: var(--shadow); overflow: hidden; transform-origin: 50% 0; transform: scale(calc(1 - var(--p, 0) * .06)); }
+.work:nth-child(even) { background: var(--bg-soft); }
+.work .w-text { display: flex; flex-direction: column; min-width: 0; }
+.w-top { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.w-top .idx { color: var(--fg); font-size: 1.1rem; letter-spacing: 0; }
+.w-top .idx em { font-style: normal; color: var(--muted); font-size: 0.7rem; letter-spacing: .1em; padding-left: 2px; }
+.work h3 { margin-top: 26px; font-size: clamp(1.9rem, 3.3vw, 3.1rem); font-weight: 600; letter-spacing: -0.03em; line-height: 1.02; text-wrap: balance; }
+.work h3 .serif { font-weight: 400; }
+.work .desc { margin-top: 18px; color: var(--muted); font-size: 1rem; line-height: 1.55; max-width: 46ch; }
+.w-meta { margin: auto 0 0; padding-top: 24px; display: grid; grid-template-columns: 1fr 1.35fr; gap: 24px; border-top: 1px solid var(--line); }
+.w-meta > div { min-width: 0; }
+.w-meta dt { font-family: var(--font-mono); font-size: 0.64rem; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+.w-meta dd { margin: 10px 0 0; font-size: 0.9rem; line-height: 1.5; }
+.w-meta dd.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.w-meta dd.chips span { font-size: 0.74rem; font-weight: 600; padding: 5px 10px; border-radius: 999px; border: 1px solid var(--line); background: var(--bg-soft); }
+.work:nth-child(even) .w-meta dd.chips span { background: var(--card); }
+.work .frame { height: 100%; min-height: 0; border-radius: 22px; background: var(--bg-soft); border: 1px solid var(--line); overflow: hidden; position: relative; display: grid; place-items: center; padding: 7%; transform: perspective(1200px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)); transition: transform 400ms cubic-bezier(.2,.8,.2,1); }
+.work:nth-child(even) .frame { background: var(--card); }
 .work .frame.tint { background: linear-gradient(160deg, var(--accent-soft), var(--bg-soft)); }
-.work .cap { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
-.work .cap b { font-size: 1.05rem; font-weight: 600; }
-.work .tags { display: flex; gap: 6px; flex-wrap: wrap; }
-.work .tags span { font-size: 0.72rem; font-weight: 600; padding: 5px 11px; border-radius: 999px; background: var(--bg-soft); border: 1px solid var(--line); color: var(--muted); }
-.work .desc { color: var(--muted); font-size: 0.92rem; max-width: 52ch; }
-@media (max-width: 760px) { .work-grid { grid-template-columns: 1fr; } }
+.work .frame .shot { position: relative; width: 100%; max-width: 540px; transform: rotate(0); box-shadow: 0 40px 70px -30px rgba(0,0,0,.4); transition: transform 500ms cubic-bezier(.2,.8,.2,1); }
+.work:hover .frame .shot { transform: scale(1.03); }
+.work .shot .bar { height: 30px; } .work .shot .bar span { font-size: 0.64rem; }
+.work .shot .body { font-size: 0.8rem; gap: 11px; padding: 14px; }
+.work .shot .ttl { font-size: 0.94rem; } .work .shot .sub { font-size: 0.68rem; }
+.work .shot .mono { font-size: 0.68rem; } .work .shot .kv b { font-size: 1.1rem; } .work .shot .kv small { font-size: 0.64rem; }
+.work .shot .bars { height: 70px; } .work .shot .chip-row span { font-size: 0.64rem; }
+@media (prefers-reduced-motion: reduce) { .work { transform: none; } }
+@media (max-width: 980px) {
+  .work { position: relative; top: auto; height: auto; grid-template-columns: 1fr; gap: 24px; padding: 26px; transform: none; }
+  .work .frame { order: -1; height: auto; aspect-ratio: auto; padding: 22px; }
+  .w-meta { margin-top: 26px; }
+}
 
 /* ---------- who ---------- */
 section.who { padding-block: 72px 90px; background: var(--bg-soft); }
@@ -435,40 +469,60 @@ section.who .h2 { margin-top: 10px; }
 /* education: lens cards. Hover closes the aperture and pulls focus, one shot. */
 @property --r { syntax: '<percentage>'; inherits: true; initial-value: 120%; }
 @property --t { syntax: '<angle>'; inherits: true; initial-value: 0deg; }
-.edu-wrap { margin-top: 56px; }
-.edu-wrap .lab { font-size: 0.72rem; text-transform: uppercase; letter-spacing: .12em; color: var(--muted); font-weight: 700; padding-bottom: 16px; }
-.edu { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
-.edu-card { background: var(--card); border: 1px solid var(--line); border-radius: 18px; overflow: hidden; cursor: default; transition: transform 320ms cubic-bezier(.2,.8,.2,1), border-color 320ms, box-shadow 320ms; }
-.edu-card:hover, .edu-card:focus-visible, .edu-card.fire { transform: translateY(-4px); border-color: var(--fg); box-shadow: var(--shadow); }
-.edu-photo { position: relative; aspect-ratio: 16 / 9; overflow: hidden; background: var(--bg-soft); --r: 120%; --t: 0deg; }
-.edu-photo img { width: 100%; height: 100%; object-fit: cover; display: block; transform: scale(1.02); }
-.edu-card:hover .edu-photo, .edu-card:focus-visible .edu-photo, .edu-card.fire .edu-photo { animation: iris 1.15s cubic-bezier(.45,0,.2,1) both; }
-.edu-card:hover .edu-photo img, .edu-card:focus-visible .edu-photo img, .edu-card.fire .edu-photo img { animation: focusPull 1.15s cubic-bezier(.45,0,.2,1) both; }
+.edu-wrap { margin-top: 72px; }
+.edu-wrap .h2 { margin-top: 10px; }
+.duo { display: flex; height: clamp(480px, 72vh, 720px); margin-top: 44px; border-radius: 32px; overflow: hidden; background: #0b0c0b; box-shadow: var(--shadow); }
+.half { position: relative; flex: 1 1 0; min-width: 0; overflow: hidden; cursor: default; --r: 120%; --t: 0deg; transition: flex-grow 750ms cubic-bezier(.2,.8,.2,1); outline-offset: -3px; }
+.half + .half { border-left: 1px solid rgba(255,255,255,.4); }
+.duo:hover .half, .duo.has-on .half { flex-grow: 1; }
+.duo:hover .half:hover, .duo.has-on .half.on { flex-grow: 2.1; }
+.half img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; transform: scale(1.02); }
+.edu-scrim { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,.28) 0%, rgba(0,0,0,0) 32%, rgba(0,0,0,.02) 55%, rgba(0,0,0,.62) 100%); pointer-events: none; }
+.edu-eyebrow { position: absolute; left: clamp(20px, 3vw, 40px); top: clamp(20px, 3vw, 34px); color: #fff; font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: .16em; text-transform: uppercase; opacity: .92; z-index: 2; }
+.edu-copy { position: absolute; left: clamp(20px, 3vw, 40px); right: clamp(20px, 3vw, 40px); bottom: clamp(22px, 3vw, 40px); color: #fff; display: grid; gap: 12px; z-index: 2; }
+.edu-copy h3 { font-size: clamp(1.25rem, 2.3vw, 2.1rem); font-weight: 700; letter-spacing: -0.025em; line-height: 1.04; max-width: 16ch; text-shadow: 0 2px 24px rgba(0,0,0,.3); text-wrap: balance; transition: font-size 600ms cubic-bezier(.2,.8,.2,1); }
+.half:hover .edu-copy h3, .half.on .edu-copy h3 { font-size: clamp(1.6rem, 3.5vw, 3.4rem); }
+.edu-copy p { transition: opacity 400ms; }
+.duo:hover .half:not(:hover) .edu-copy p, .duo.has-on .half:not(.on) .edu-copy p { opacity: 0; }
+.edu-copy p { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; font-size: 1.05rem; opacity: .94; }
+.edu-copy .yr { font-family: var(--font-mono); font-size: 0.78rem; padding: 6px 11px; border: 1px solid rgba(255,255,255,.55); border-radius: 999px; }
+.edu-copy .yr em { font-style: normal; opacity: .7; padding: 0 4px; }
+.half:hover, .half:focus-visible, .half.fire { animation: iris 1.15s cubic-bezier(.45,0,.2,1) both; }
+.half:hover img, .half:focus-visible img, .half.fire img { animation: focusPull 1.15s cubic-bezier(.45,0,.2,1) both; }
 @keyframes iris { 0% { --r: 120%; --t: 0deg; } 42% { --r: 0%; --t: 22deg; } 100% { --r: 120%; --t: 0deg; } }
-@keyframes focusPull { 0% { filter: blur(0); transform: scale(1.02); } 42% { filter: blur(7px); transform: scale(1.12); } 100% { filter: blur(0); transform: scale(1.05); } }
-.aperture { position: absolute; inset: 0; pointer-events: none; }
+@keyframes focusPull { 0% { filter: blur(0); transform: scale(1.02); } 42% { filter: blur(7px); transform: scale(1.1); } 100% { filter: blur(0); transform: scale(1.04); } }
+.aperture { position: absolute; inset: 0; pointer-events: none; z-index: 3; }
 .aperture i { position: absolute; left: -50%; top: -100%; width: 200%; height: 150%; background: #0b0c0b; transform-origin: 50% 100%; transform: rotate(calc(var(--a) + var(--t))) translateY(calc(-1 * var(--r))); will-change: transform; }
 .aperture i:nth-child(1) { --a: 0deg; } .aperture i:nth-child(2) { --a: 45deg; } .aperture i:nth-child(3) { --a: 90deg; } .aperture i:nth-child(4) { --a: 135deg; }
 .aperture i:nth-child(5) { --a: 180deg; } .aperture i:nth-child(6) { --a: 225deg; } .aperture i:nth-child(7) { --a: 270deg; } .aperture i:nth-child(8) { --a: 315deg; }
-.fb { position: absolute; inset: 20% 18%; opacity: 0; transform: scale(1.3); transition: opacity 250ms, transform 600ms cubic-bezier(.2,.8,.2,1); pointer-events: none;
-  background: linear-gradient(#fff,#fff) 0 0/16px 1.5px no-repeat, linear-gradient(#fff,#fff) 0 0/1.5px 16px no-repeat, linear-gradient(#fff,#fff) 100% 0/16px 1.5px no-repeat, linear-gradient(#fff,#fff) 100% 0/1.5px 16px no-repeat, linear-gradient(#fff,#fff) 0 100%/16px 1.5px no-repeat, linear-gradient(#fff,#fff) 0 100%/1.5px 16px no-repeat, linear-gradient(#fff,#fff) 100% 100%/16px 1.5px no-repeat, linear-gradient(#fff,#fff) 100% 100%/1.5px 16px no-repeat; mix-blend-mode: difference; }
-.edu-card:hover .fb, .edu-card:focus-visible .fb, .edu-card.fire .fb { opacity: 1; transform: scale(1); transition-delay: 520ms; }
-.exif { position: absolute; left: 12px; bottom: 10px; font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: .12em; color: #fff; background: rgba(0,0,0,.55); padding: 4px 8px; border-radius: 6px; opacity: 0; translate: 0 6px; transition: opacity 300ms, translate 300ms; }
-.edu-card:hover .exif, .edu-card:focus-visible .exif, .edu-card.fire .exif { opacity: 1; translate: 0 0; transition-delay: 600ms; }
-.edu-meta { display: grid; gap: 5px; padding: 18px 22px 20px; }
-.edu-meta b { font-weight: 600; font-size: 1.08rem; line-height: 1.3; }
-.edu-meta span { color: var(--muted); font-size: 0.92rem; line-height: 1.45; }
-.edu-meta .yr { font-family: var(--font-mono); font-size: 0.76rem; color: var(--fg); margin-top: 4px; }
-.edu-meta .yr em { font-style: normal; color: var(--muted); padding: 0 5px; }
-@media (max-width: 760px) { .edu { grid-template-columns: 1fr; gap: 16px; } .edu-wrap { margin-top: 36px; } }
-.skillset { display: grid; gap: 0; }
-.sg { display: grid; grid-template-columns: 150px 1fr; gap: 12px; align-items: start; padding: 14px 0; border-top: 1px solid var(--line); }
-.sg:first-child { border-top: 0; padding-top: 0; }
-.sg-k { font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); padding-top: 9px; }
-.sg-c { display: flex; flex-wrap: wrap; gap: 8px; }
-.sg-c span { font-size: 0.8rem; font-weight: 600; padding: 7px 12px; border-radius: 999px; background: var(--card); border: 1px solid var(--line); transition: background 200ms, transform 200ms; }
-.sg-c span:hover { background: var(--accent); color: var(--on-accent); transform: translateY(-2px); }
-@media (max-width: 520px) { .sg { grid-template-columns: 1fr; gap: 8px; } .sg-k { padding-top: 0; } }
+.fb { position: absolute; inset: 16% 12%; opacity: 0; transform: scale(1.3); transition: opacity 250ms, transform 600ms cubic-bezier(.2,.8,.2,1); pointer-events: none; z-index: 4;
+  background: linear-gradient(#fff,#fff) 0 0/22px 1.5px no-repeat, linear-gradient(#fff,#fff) 0 0/1.5px 22px no-repeat, linear-gradient(#fff,#fff) 100% 0/22px 1.5px no-repeat, linear-gradient(#fff,#fff) 100% 0/1.5px 22px no-repeat, linear-gradient(#fff,#fff) 0 100%/22px 1.5px no-repeat, linear-gradient(#fff,#fff) 0 100%/1.5px 22px no-repeat, linear-gradient(#fff,#fff) 100% 100%/22px 1.5px no-repeat, linear-gradient(#fff,#fff) 100% 100%/1.5px 22px no-repeat; }
+.half:hover .fb, .half:focus-visible .fb, .half.fire .fb { opacity: .9; transform: scale(1); transition-delay: 520ms; }
+@media (max-width: 760px) { .edu-wrap { margin-top: 44px; } .duo { flex-direction: column; height: auto; margin-top: 28px; border-radius: 22px; } .half { flex: none !important; height: clamp(320px, 56vh, 460px); } .half + .half { border-left: 0; border-top: 1px solid rgba(255,255,255,.4); } .edu-copy h3, .half:hover .edu-copy h3, .half.on .edu-copy h3 { font-size: clamp(1.4rem, 6.6vw, 2rem); } .duo:hover .half:not(:hover) .edu-copy p, .duo.has-on .half:not(.on) .edu-copy p { opacity: .94; } .edu-copy p { font-size: 0.92rem; } }
+/* stack: the skills as a ledger of six big rows. Hover inverts a row to ink. */
+.stack-wrap { margin-top: 88px; }
+.stack-wrap .lead b { color: var(--fg); font-weight: 600; }
+.stack { list-style: none; margin: 44px 0 0; padding: 0; border-top: 1px solid var(--line); }
+.stack li { position: relative; isolation: isolate; display: grid; grid-template-columns: 170px minmax(0, 1fr) minmax(0, 1.45fr); gap: 20px 44px; align-items: center; padding: 34px 0; border-bottom: 1px solid var(--line); opacity: 0; transform: translateY(18px); transition: opacity 700ms cubic-bezier(.2,.8,.2,1), transform 700ms cubic-bezier(.2,.8,.2,1), color 320ms; transition-delay: calc(var(--i) * 90ms), calc(var(--i) * 90ms), 0ms; }
+.stack.rv-in li, .stack:not(.rv-wait) li { opacity: 1; transform: none; }
+.stack li::before { content: ""; position: absolute; inset: 0 -22px; border-radius: 26px; background: var(--ink); opacity: 0; transform: scaleY(.7); transition: opacity 280ms, transform 420ms cubic-bezier(.2,.8,.2,1); z-index: -1; }
+.stack li:hover, .stack li:focus-within { color: var(--ink-fg); border-color: transparent; transition-delay: 0ms; }
+.stack li:hover::before, .stack li:focus-within::before { opacity: 1; transform: none; }
+.stack .n { font-size: clamp(3.6rem, 7.4vw, 6.8rem); font-weight: 800; letter-spacing: -0.06em; line-height: .9; color: transparent; -webkit-text-stroke: 2px var(--fg); font-variant-numeric: tabular-nums; transition: color 420ms cubic-bezier(.2,.8,.2,1), -webkit-text-stroke-color 320ms; }
+.stack li:hover .n, .stack li:focus-within .n { color: var(--ink-fg); -webkit-text-stroke-color: var(--ink-fg); }
+@supports not (-webkit-text-stroke: 1px #000) { .stack .n { color: var(--line); } .stack li:hover .n { color: var(--ink-fg); } }
+.stack .g h3 { font-size: clamp(1.5rem, 2.4vw, 2.2rem); font-weight: 600; letter-spacing: -0.025em; line-height: 1.05; }
+.stack .g p { margin-top: 10px; color: var(--muted); font-size: 0.98rem; line-height: 1.5; max-width: 36ch; transition: color 320ms; }
+.stack .g small { display: block; margin-top: 12px; font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); transition: color 320ms; }
+.stack li:hover .g p, .stack li:focus-within .g p { color: color-mix(in srgb, var(--ink-fg) 72%, transparent); }
+.stack li:hover .g small, .stack li:focus-within .g small { color: color-mix(in srgb, var(--ink-fg) 60%, transparent); }
+.stack .tl { display: flex; flex-wrap: wrap; gap: 8px; }
+.stack .tl span { display: inline-flex; align-items: center; gap: 8px; font-size: 0.88rem; font-weight: 600; padding: 9px 14px; border-radius: 999px; background: var(--card); border: 1px solid var(--line); transition: background 240ms, color 240ms, border-color 240ms, transform 240ms; }
+.stack .tl img { width: 18px; height: 18px; display: block; }
+.stack li:hover .tl span, .stack li:focus-within .tl span { background: transparent; border-color: color-mix(in srgb, var(--ink-fg) 30%, transparent); color: var(--ink-fg); }
+.stack li:hover .tl span:hover { background: var(--ink-fg); color: var(--ink); border-color: transparent; transform: translateY(-2px); }
+@media (max-width: 980px) { .stack li { grid-template-columns: 120px minmax(0, 1fr); } .stack .tl { grid-column: 2; } }
+@media (max-width: 760px) { .stack-wrap { margin-top: 56px; } .stack { margin-top: 28px; } .stack li { grid-template-columns: auto minmax(0, 1fr); gap: 14px 18px; padding: 24px 0; align-items: start; } .stack li::before { inset: 0 -10px; border-radius: 18px; } .stack .n { font-size: 2.9rem; line-height: 1; } .stack .g h3 { font-size: 1.35rem; } .stack .g p { font-size: 0.92rem; } .stack .g small { margin-top: 8px; } .stack .tl { grid-column: 1 / -1; gap: 7px; } .stack .tl span { font-size: 0.8rem; padding: 8px 12px; } }
 @media (max-width: 860px) { .who-grid { grid-template-columns: 1fr; } .photo-card { max-width: 420px; margin: 0 auto; } }
 @media (max-width: 520px) { .ledger .row { grid-template-columns: 1fr auto; } .ledger .row span { grid-column: 1 / -1; margin-top: -8px; font-size: 0.82rem; } }
 
@@ -592,10 +646,12 @@ footer { padding-block: 56px 24px; background: var(--bg); overflow: hidden; }
   .highlights .hl-grid { margin-top: 28px; }
 
   /* works */
-  .work-grid { margin-top: 32px; gap: 32px; }
-  .work .frame { padding: 8%; border-radius: 18px; }
-  .work .cap { gap: 8px; }
-  .work .cap b { font-size: 1rem; }
+  .work-grid { margin-top: 32px; gap: 18px; }
+  .work { padding: 18px; border-radius: 22px; gap: 18px; }
+  .work .frame { padding: 14px; border-radius: 16px; }
+  .work h3 { font-size: 1.75rem; margin-top: 18px; }
+  .work .desc { font-size: 0.95rem; }
+  .w-meta { grid-template-columns: 1fr; gap: 16px; padding-top: 18px; }
 
   /* who */
   .who-grid { margin-top: 32px; gap: 32px; }
@@ -778,35 +834,63 @@ web:88   <span class="g">pushed</span></div><div class="sub">tagged by build id<
 <section class="works" id="works">
   <div class="wrap">
     <div class="ed-head rv">
-      <div><span class="kicker">Selected Work</span><h2 class="h2">What I've built</h2></div>
-      <p class="lead">Four things I'd point to first. Each one shipped on Azure, and each one is still running.</p>
+      <div><span class="kicker">Selected Work</span><h2 class="h2">What I've <span class="serif">built</span></h2></div>
+      <p class="lead">Four things I'd point to first. Each one shipped on Azure, each one is still running, and each one says what it changed.</p>
     </div>
-    <div class="work-grid">
-      <div class="work rv">
+    <div class="work-grid" id="caseStack">
+      <article class="work" style="--i:0">
+        <div class="w-text rv">
+          <div class="w-top"><span class="idx">01 <em>/ 04</em></span><span class="org">Charles Technologies · 2025 → now</span></div>
+          <h3>Release pipelines <span class="serif">on Azure DevOps</span></h3>
+          <p class="desc">YAML multi-stage pipelines that build Docker images, run unit tests and SonarQube analysis, then deploy to App Service and Container Apps, with Azure CLI steps and Entra ID service connections for secure, automated access.</p>
+          <dl class="w-meta">
+            <div><dt>Stack</dt><dd class="chips"><span>Azure Pipelines</span><span>YAML</span><span>Docker</span><span>SonarQube</span><span>App Service</span></dd></div>
+            <div><dt>Outcome</dt><dd>Every merge to main is built, tested, scanned and deployed to development and production without a hand on it.</dd></div>
+          </dl>
+        </div>
         <div class="frame tint"><div class="shot"><div class="bar"><i></i><i></i><i></i><span>azure-pipelines.yml</span></div><div class="body"><div class="ttl">Multi-stage CI/CD</div><div class="steps"><b>✓</b><i class="done"></i><b>✓</b><i class="done"></i><b>✓</b><i class="done"></i><b>✓</b><i class="done"></i><b>✓</b></div><div class="mono"><span class="k">stages</span>: Build → Test → Infra → Deploy → Monitor
 <span class="k">trigger</span>: main · <span class="g">quality gate passed</span></div><div class="kv"><div><b>5</b><small>stages</small></div><div><b>2</b><small>environments</small></div></div></div></div></div>
-        <div class="cap"><b>Azure DevOps Release Pipelines</b><div class="tags"><span>CI/CD</span><span>YAML</span></div></div>
-        <p class="desc">YAML multi-stage pipelines in Azure DevOps that build Docker images, run unit tests and SonarQube analysis, and deploy to App Service and Container Apps across development and production, with Azure CLI steps and Entra ID service connections for secure, automated access.</p>
-      </div>
-      <div class="work rv" style="--d:100ms">
+      </article>
+      <article class="work" style="--i:1">
+        <div class="w-text rv">
+          <div class="w-top"><span class="idx">02 <em>/ 04</em></span><span class="org">Charles Technologies · 2025 → now</span></div>
+          <h3>Terraform <span class="serif">on Azure</span></h3>
+          <p class="desc">Reusable Terraform modules for App Service, Container Apps, Key Vault and storage, so a new environment is a plan, a review and an apply rather than an afternoon in the portal.</p>
+          <dl class="w-meta">
+            <div><dt>Stack</dt><dd class="chips"><span>Terraform</span><span>Key Vault</span><span>RBAC</span><span>Entra ID</span><span>Storage</span></dd></div>
+            <div><dt>Outcome</dt><dd>Every environment is provisioned identically from code, and infrastructure changes go through pull requests like application code.</dd></div>
+          </dl>
+        </div>
         <div class="frame"><div class="shot"><div class="bar"><i></i><i></i><i></i><span>main.tf</span></div><div class="body"><div class="ttl">Infrastructure as Code</div><div class="mono"><span class="k">module</span> "container_app" {
   source = "./modules/aca"
   image  = "${acr}/app:${build_id}"
 }
 <span class="g">Apply complete! Resources: 6 added</span></div><div class="chip-row"><span>Key Vault</span><span>RBAC</span><span>Entra ID</span><span>Storage</span></div></div></div></div>
-        <div class="cap"><b>Terraform on Azure</b><div class="tags"><span>IaC</span><span>Terraform</span></div></div>
-        <p class="desc">Reusable Terraform configuration for App Service, Container Apps, Key Vault and storage, so every environment is provisioned identically from code and infrastructure changes go through pull requests like application code.</p>
-      </div>
-      <div class="work rv" style="--d:160ms">
+      </article>
+      <article class="work" style="--i:2">
+        <div class="w-text rv">
+          <div class="w-top"><span class="idx">03 <em>/ 04</em></span><span class="org">Charles Technologies · 2025 → now</span></div>
+          <h3>Docker, ACR <span class="serif">&amp; Container Apps</span></h3>
+          <p class="desc">Images built in the pipeline, tagged by build id and stored in Azure Container Registry, then rolled out to Container Apps. The same automation builds and publishes the mobile apps.</p>
+          <dl class="w-meta">
+            <div><dt>Stack</dt><dd class="chips"><span>Docker</span><span>ACR</span><span>Container Apps</span><span>App Store</span><span>Play Store</span></dd></div>
+            <div><dt>Outcome</dt><dd>Tagged images roll from ACR to Container Apps on approval, and App Store and Play Store releases run from the pipeline.</dd></div>
+          </dl>
+        </div>
         <div class="frame"><div class="shot"><div class="bar"><i></i><i></i><i></i><span>acr · container apps</span></div><div class="body"><div class="ttl">Containerised Delivery</div><div class="bars"><i style="height:30%"></i><i style="height:50%"></i><i style="height:45%"></i><i style="height:72%"></i><i style="height:66%"></i><i style="height:90%"></i><i style="height:100%"></i><i style="height:84%"></i></div><div class="sub">images tagged by Build.BuildId · pushed to ACR · rolled to Container Apps</div></div></div></div>
-        <div class="cap"><b>Docker, ACR &amp; Container Apps</b><div class="tags"><span>Containers</span><span>Azure</span></div></div>
-        <p class="desc">Images built in the pipeline, tagged and stored in Azure Container Registry, and rolled out to Container Apps, plus mobile build and release automation for publishing to the Apple App Store and Google Play Store.</p>
-      </div>
-      <div class="work rv" style="--d:220ms">
+      </article>
+      <article class="work" style="--i:3">
+        <div class="w-text rv">
+          <div class="w-top"><span class="idx">04 <em>/ 04</em></span><span class="org">Awan Infotech · 2021 → 2025</span></div>
+          <h3>Kubernetes support <span class="serif">&amp; NOC</span></h3>
+          <p class="desc">24/7 NOC operations across production, UAT and staging: incident management with Grafana, Prometheus and New Relic, log analysis, L1/L2 troubleshooting and escalation on critical systems.</p>
+          <dl class="w-meta">
+            <div><dt>Stack</dt><dd class="chips"><span>Kubernetes</span><span>Grafana</span><span>Prometheus</span><span>New Relic</span><span>Ivanti</span></dd></div>
+            <div><dt>Outcome</dt><dd>Three years of production, UAT and staging kept inside SLA targets, with root-cause analysis written up on the critical incidents.</dd></div>
+          </dl>
+        </div>
         <div class="frame tint"><div class="shot"><div class="bar"><i></i><i></i><i></i><span>grafana · prod</span></div><div class="body"><div class="ttl">Kubernetes Operations</div><div class="pods"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="spark"><svg viewBox="0 0 200 46" preserveAspectRatio="none"><path class="a" d="M0 36 L25 30 L50 32 L75 20 L100 24 L125 12 L150 16 L175 8 L200 10 L200 46 L0 46 Z"/><path class="l" d="M0 36 L25 30 L50 32 L75 20 L100 24 L125 12 L150 16 L175 8 L200 10"/></svg></div><div class="kv"><div><b>3</b><small>environments</small></div><div><b>24/7</b><small>NOC coverage</small></div></div></div></div></div>
-        <div class="cap"><b>Kubernetes Support &amp; NOC</b><div class="tags"><span>K8s</span><span>Monitoring</span></div></div>
-        <p class="desc">Over three years of production, UAT and staging support: 24/7 NOC operations, incident management with Grafana, Prometheus and New Relic, log analysis and L1/L2 troubleshooting inside SLA targets, with root-cause analysis and escalation on critical systems.</p>
-      </div>
+      </article>
     </div>
   </div>
 </section>
@@ -823,7 +907,7 @@ web:88   <span class="g">pushed</span></div><div class="sub">tagged by build id<
           <img src="img/card.jpg" alt="Abhishek Punna" width="640" height="640" loading="lazy" decoding="async">
         </div>
         <div class="foot">
-          <span class="loc">Chennai, India</span>
+          <span class="loc">Chennai, India · English &amp; Telugu</span>
           <div class="nm"><b>Abhishek Punna</b><span>Azure DevOps Engineer</span></div>
         </div>
       </div>
@@ -832,7 +916,18 @@ web:88   <span class="g">pushed</span></div><div class="sub">tagged by build id<
         <div class="roles">
     <div class="hl rv">
       <div class="hl-top"><div><b>Charles Technologies</b><small>Azure DevOps Engineer · Chennai</small></div><span class="yr">2025 <em>→</em> Now</span></div>
-      <ul class="hl-list">
+      <div class="hl-tabs" role="tablist" aria-label="View"><button type="button" class="on" data-tab="day" role="tab" aria-selected="true">A typical day</button><button type="button" data-tab="res" role="tab" aria-selected="false">Responsibilities</button></div>
+      <ol class="day shift" data-pane="day">
+        <li><span class="t">Checks</span><span>Check overnight pipeline runs in Azure DevOps. Re-run flaky stages, fix the ones that actually broke, note anything for stand-up.</span></li>
+        <li><span class="t">Stand-up</span><span>Stand-up with dev and QA. Agree what ships today and to which environment: dev, UAT or production.</span></li>
+        <li><span class="t">Reviews</span><span>Pull requests in Azure Repos: branch policies, build validation, review the diff, approve or send back.</span></li>
+        <li><span class="t">Pipelines</span><span>Pipeline work: a new stage in the YAML template, a SonarQube gate for a service, a Docker build that needs a smaller image.</span></li>
+        <li><span class="t">Terraform</span><span>Terraform: plan an infrastructure change, review the plan with the team, apply. A Container App, a Key Vault secret, a scaling rule.</span></li>
+        <li><span class="t">Release</span><span>Release: promote the tagged image from ACR to App Service or Container Apps, collect approvals, run smoke checks.</span></li>
+        <li><span class="t">Monitor</span><span>Watch the release land: Application Insights failures, Azure Monitor alerts, the Grafana board for the service.</span></li>
+        <li><span class="t">Upkeep</span><span>Housekeeping: rotate a secret, tidy a service connection or RBAC role, script a repetitive task in Python, update the wiki.</span></li>
+      </ol>
+      <ul class="hl-list" data-pane="res" hidden>
         <li>YAML multi-stage pipelines in Azure DevOps for builds, tests and deployments, with unit tests and SonarQube analysis inside the pipeline so quality issues surface early.</li>
         <li>Azure resources provisioned with Terraform and reusable configuration, plus Azure CLI steps in the pipeline for provisioning and configuration.</li>
         <li>Docker images built, tagged and stored in Azure Container Registry, then rolled out to App Service and Container Apps across development and production.</li>
@@ -842,7 +937,17 @@ web:88   <span class="g">pushed</span></div><div class="sub">tagged by build id<
     </div>
     <div class="hl rv">
       <div class="hl-top"><div><b>Awan Infotech</b><small>Junior DevOps Engineer · Chennai</small></div><span class="yr">2021 <em>→</em> 2025</span></div>
-      <ul class="hl-list">
+      <div class="hl-tabs" role="tablist" aria-label="View"><button type="button" class="on" data-tab="day" role="tab" aria-selected="true">A typical day</button><button type="button" data-tab="res" role="tab" aria-selected="false">Responsibilities</button></div>
+      <ol class="day shift" data-pane="day">
+        <li><span class="t">Start</span><span>Handover from the previous shift: open incidents, changes in flight, alerts to keep an eye on.</span></li>
+        <li><span class="t">Sweep</span><span>Monitoring pass across production, UAT and staging: Grafana, Prometheus and New Relic dashboards, then <code>kubectl get pods</code> for anything pending or restarting.</span></li>
+        <li><span class="t">Queue</span><span>Ivanti tickets, L1 and L2: read the logs, reproduce, fix or triage, and keep the customer informed.</span></li>
+        <li><span class="t">Release</span><span>Trigger approved deployments through the CI/CD pipeline, or deploy to a VM by hand when that is the process, then verify.</span></li>
+        <li><span class="t">Alert</span><span>An alert fires: acknowledge, triage, escalate to L3 or the dev team if needed, and track it to the SLA. Afterwards, write the root-cause analysis.</span></li>
+        <li><span class="t">Access</span><span>Access and change requests handled inside the access-control policy, every step recorded on the ticket.</span></li>
+        <li><span class="t">End</span><span>Handover notes for the next shift: what is open, what was fixed, what to watch.</span></li>
+      </ol>
+      <ul class="hl-list" data-pane="res" hidden>
         <li>Kubernetes support for applications across production, UAT and staging, coordinating with technical and product teams to meet SLA targets.</li>
         <li>24/7 NOC operations: incident management, continuous monitoring and first-level troubleshooting.</li>
         <li>L1/L2 application support through log analysis, issue triage and customer communication.</li>
@@ -851,48 +956,52 @@ web:88   <span class="g">pushed</span></div><div class="sub">tagged by build id<
       </ul>
     </div>
         </div>
-        <div>
-          <div class="lab" style="font-size:.72rem;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);font-weight:700;padding-bottom:10px">Skills</div>
-          <div class="skillset">
-            <div class="sg"><span class="sg-k">Cloud</span><div class="sg-c"><span>Azure DevOps</span><span>App Service</span><span>Container Apps</span><span>Azure VMs</span><span>Storage Accounts</span><span>Azure CLI</span><span>Azure SQL</span><span>Cosmos DB</span><span>MySQL</span></div></div>
-            <div class="sg"><span class="sg-k">CI / CD</span><div class="sg-c"><span>Azure Pipelines</span><span>Azure Repos</span><span>Git</span><span>YAML</span><span>SonarQube</span><span>Unit Testing</span></div></div>
-            <div class="sg"><span class="sg-k">Containers &amp; IaC</span><div class="sg-c"><span>Docker</span><span>ACR</span><span>Kubernetes (AKS)</span><span>Terraform</span><span>Nginx</span></div></div>
-            <div class="sg"><span class="sg-k">Observability</span><div class="sg-c"><span>Azure Monitor</span><span>Log Analytics</span><span>Application Insights</span><span>Grafana</span><span>Prometheus</span><span>New Relic</span></div></div>
-            <div class="sg"><span class="sg-k">Security &amp; Automation</span><div class="sg-c"><span>Key Vault</span><span>RBAC</span><span>Entra ID</span><span>Python</span><span>Bash</span></div></div>
-            <div class="sg"><span class="sg-k">Platforms &amp; ITSM</span><div class="sg-c"><span>Rackspace</span><span>SendGrid</span><span>Ivanti</span></div></div>
-            <div class="sg"><span class="sg-k">Languages</span><div class="sg-c"><span>English</span><span>Telugu</span></div></div>
-          </div>
-        </div>
       </div>
     </div>
-    <div class="edu-wrap rv">
-      <div class="lab">Education</div>
-      <div class="edu">
-        <div class="edu-card" tabindex="0">
-          <div class="edu-photo">
-            <img src="img/edu-scsvmv.jpg" alt="Sri Chandrasekharendra Saraswathi Viswa Mahavidyalaya campus, Kanchipuram" width="1400" height="614" loading="lazy" decoding="async">
-            <div class="aperture" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-            <i class="fb" aria-hidden="true"></i>
-            <span class="exif">f/1.8 · ISO 100 · 2016 → 2020</span>
-          </div>
-          <div class="edu-meta">
-            <b>B.E. Computer Science &amp; Engineering</b>
-            <span>Sri Chandrasekharendra Saraswathi Viswa Mahavidyalaya (SCSVMV University) · Kanchipuram</span>
-            <span class="yr">2016 <em>→</em> 2020</span>
-          </div>
+    <div class="stack-wrap">
+      <div class="ed-head rv">
+        <div>
+          <span class="kicker">Toolbox</span>
+          <h2 class="h2">What I <span class="serif">work with</span></h2>
         </div>
-        <div class="edu-card" tabindex="0">
-          <div class="edu-photo">
-            <img src="img/edu-kcp.jpg" alt="KCP Siddhartha Adarsh Residential Public School campus, Vijayawada" width="980" height="475" loading="lazy" decoding="async">
-            <div class="aperture" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-            <i class="fb" aria-hidden="true"></i>
-            <span class="exif">f/1.8 · ISO 100 · 2014 → 2016</span>
+        <p class="lead">Six groups, <b>34 tools</b>, sorted by the job they do rather than by vendor. The ones with a logo are in my hands most days.</p>
+      </div>
+      <ol class="stack rv">
+        <li style="--i:0"><span class="n" aria-hidden="true">09</span><div class="g"><h3>Cloud</h3><p>Where the workloads live. Compute, data and storage on Azure, driven from the CLI and Azure DevOps.</p><small>09 tools</small></div><div class="tl"><span><img src="img/azuredevops.svg" alt="" width="18" height="18">Azure DevOps</span><span>App Service</span><span>Container Apps</span><span>Azure VMs</span><span>Storage Accounts</span><span>Azure CLI</span><span>Azure SQL</span><span>Cosmos DB</span><span>MySQL</span></div></li>
+        <li style="--i:1"><span class="n" aria-hidden="true">06</span><div class="g"><h3>CI / CD</h3><p>Code to artifact. YAML pipelines, branch policies and quality gates that decide what ships.</p><small>06 tools</small></div><div class="tl"><span><img src="img/azuredevops.svg" alt="" width="18" height="18">Azure Pipelines</span><span><img src="img/git.svg" alt="" width="18" height="18">Git</span><span><img src="img/sonarqube.svg" alt="" width="18" height="18">SonarQube</span><span>Azure Repos</span><span>YAML</span><span>Unit Testing</span></div></li>
+        <li style="--i:2"><span class="n" aria-hidden="true">05</span><div class="g"><h3>Containers &amp; IaC</h3><p>Images and infrastructure as code. Built once, reviewed as a plan, applied the same way every time.</p><small>05 tools</small></div><div class="tl"><span><img src="img/docker.svg" alt="" width="18" height="18">Docker</span><span><img src="img/kubernetes.svg" alt="" width="18" height="18">Kubernetes (AKS)</span><span><img src="img/terraform.svg" alt="" width="18" height="18">Terraform</span><span>ACR</span><span>Nginx</span></div></li>
+        <li style="--i:3"><span class="n" aria-hidden="true">06</span><div class="g"><h3>Observability</h3><p>Knowing before the customer does. Metrics, logs, traces and the alerts wired to them.</p><small>06 tools</small></div><div class="tl"><span><img src="img/grafana.svg" alt="" width="18" height="18">Grafana</span><span>Azure Monitor</span><span>Log Analytics</span><span>Application Insights</span><span>Prometheus</span><span>New Relic</span></div></li>
+        <li style="--i:4"><span class="n" aria-hidden="true">05</span><div class="g"><h3>Security &amp; Automation</h3><p>Secrets, identity and access done properly, plus the scripts that remove repeat work.</p><small>05 tools</small></div><div class="tl"><span><img src="img/keyvault.svg" alt="" width="18" height="18">Key Vault</span><span><img src="img/python.svg" alt="" width="18" height="18">Python</span><span><img src="img/bash.svg" alt="" width="18" height="18">Bash</span><span>RBAC</span><span>Entra ID</span></div></li>
+        <li style="--i:5"><span class="n" aria-hidden="true">03</span><div class="g"><h3>Platforms &amp; ITSM</h3><p>The surrounding estate: hosting, mail delivery and the ticket queue the work arrives through.</p><small>03 tools</small></div><div class="tl"><span>Rackspace</span><span>SendGrid</span><span>Ivanti</span></div></li>
+      </ol>
+    </div>
+    <div class="edu-wrap">
+      <div class="rv">
+        <span class="kicker">Education</span>
+        <h2 class="h2">Where it <span class="serif">started</span></h2>
+      </div>
+      <div class="duo rv" id="eduDuo">
+        <div class="half" tabindex="0">
+          <img src="img/edu-scsvmv.jpg" alt="Sri Chandrasekharendra Saraswathi Viswa Mahavidyalaya campus, Kanchipuram" width="1400" height="614" loading="lazy" decoding="async">
+          <div class="edu-scrim" aria-hidden="true"></div>
+          <div class="edu-eyebrow">01 · University · Kanchipuram</div>
+          <div class="edu-copy">
+            <h3>Sri Chandrasekharendra Saraswathi Viswa Mahavidyalaya</h3>
+            <p><span>B.E. Computer Science &amp; Engineering</span><span class="yr">2016 <em>→</em> 2020</span></p>
           </div>
-          <div class="edu-meta">
-            <b>Senior Secondary (CBSE), MPCC</b>
-            <span>KCP Siddhartha Adarsh Residential Public School · Vijayawada</span>
-            <span class="yr">2014 <em>→</em> 2016</span>
+          <div class="aperture" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          <i class="fb" aria-hidden="true"></i>
+        </div>
+        <div class="half" tabindex="0">
+          <img src="img/edu-kcp.jpg" alt="KCP Siddhartha Adarsh Residential Public School campus, Vijayawada" width="980" height="475" loading="lazy" decoding="async">
+          <div class="edu-scrim" aria-hidden="true"></div>
+          <div class="edu-eyebrow">02 · Senior Secondary · Vijayawada</div>
+          <div class="edu-copy">
+            <h3>KCP Siddhartha Adarsh Residential Public School</h3>
+            <p><span>Senior Secondary (CBSE) · MPCC</span><span class="yr">2014 <em>→</em> 2016</span></p>
           </div>
+          <div class="aperture" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          <i class="fb" aria-hidden="true"></i>
         </div>
       </div>
     </div>
@@ -1307,10 +1416,25 @@ web:88   <span class="g">pushed</span></div><div class="sub">tagged by build id<
     }, { passive: true });
   }
 
+  /* role cards: toggle between a typical day and the responsibilities list */
+  Array.prototype.forEach.call(document.querySelectorAll('.hl-tabs'), function (tabs) {
+    var card = tabs.closest('.hl');
+    tabs.addEventListener('click', function (e) {
+      var b = e.target.closest('button'); if (!b) return;
+      var key = b.getAttribute('data-tab');
+      Array.prototype.forEach.call(tabs.querySelectorAll('button'), function (x) { var on = x === b; x.classList.toggle('on', on); x.setAttribute('aria-selected', on ? 'true' : 'false'); });
+      Array.prototype.forEach.call(card.querySelectorAll('[data-pane]'), function (p) { p.hidden = p.getAttribute('data-pane') !== key; });
+    });
+  });
+
   /* education lens cards: a tap fires the shutter on touch screens */
-  Array.prototype.forEach.call(document.querySelectorAll('.edu-card'), function (c) {
-    c.addEventListener('click', function () { c.classList.remove('fire'); void c.offsetWidth; c.classList.add('fire'); });
-    c.querySelector('.edu-photo').addEventListener('animationend', function (e) { if (e.animationName === 'iris') c.classList.remove('fire'); });
+  var duo = document.getElementById('eduDuo');
+  Array.prototype.forEach.call(document.querySelectorAll('.half'), function (c) {
+    c.addEventListener('click', function () {
+      c.classList.remove('fire'); void c.offsetWidth; c.classList.add('fire');
+      if (duo && !window.matchMedia('(hover: hover)').matches) { var was = c.classList.contains('on'); Array.prototype.forEach.call(duo.querySelectorAll('.half'), function (h) { h.classList.remove('on'); }); if (!was) c.classList.add('on'); duo.classList.toggle('has-on', !was); }
+    });
+    c.addEventListener('animationend', function (e) { if (e.animationName === 'iris' && e.target === c) c.classList.remove('fire'); });
   });
 
   /* hero name: split into letters so they can draw in one by one */
@@ -1341,6 +1465,18 @@ web:88   <span class="g">pushed</span></div><div class="sub">tagged by build id<
       fr.addEventListener('mouseleave', function () { fr.style.setProperty('--ry', '0deg'); fr.style.setProperty('--rx', '0deg'); });
     });
   }
+  /* work: each case panel sticks, and scales back a touch as the next one slides over it */
+  var cases = Array.prototype.slice.call(document.querySelectorAll('#caseStack .work'));
+  function stackCases() {
+    if (reduce || !window.matchMedia('(min-width: 981px)').matches) { cases.forEach(function (c) { c.style.removeProperty('--p'); }); return; }
+    for (var i = 0; i < cases.length - 1; i++) {
+      var top = cases[i].getBoundingClientRect().top, next = cases[i + 1].getBoundingClientRect().top;
+      var p = Math.min(1, Math.max(0, 1 - (next - top) / cases[i].offsetHeight));
+      cases[i].style.setProperty('--p', p.toFixed(3));
+    }
+  }
+  window.addEventListener('scroll', stackCases, { passive: true }); window.addEventListener('resize', stackCases); stackCases();
+
   window.addEventListener('scroll', function () { onScroll(); onNav(); }, { passive: true }); onScroll(); onNav();
 
   /* footer name: letters fill solid as the footer scrolls into view, and empty again on the way back up */

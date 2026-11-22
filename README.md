@@ -209,6 +209,31 @@ Email, phone and LinkedIn each appeared four or five times. Now each has one cle
 - The two education rows are now photo cards (college and senior secondary) with the institution image, degree, place and years.
 - Hover (or tap on touch) fires a one-shot camera moment: eight aperture blades close over the photo and reopen, the image pulls focus (blur in, sharp out), viewfinder corner marks settle in, and a small EXIF-style caption with the years appears. Built with CSS custom-property animation (`@property`), no library.
 - Real campus photos supplied by Abhishek (`img/edu-scsvmv.jpg` 1400×614, `img/edu-kcp.jpg` 980×475). The cards moved out of the narrow text column into a full-width two-up row under the Experience grid, with 16:9 photos, and the university is named in full: Sri Chandrasekharendra Saraswathi Viswa Mahavidyalaya (SCSVMV University).
+- Education is now two full-width photo panels, one per institution, modelled on a hero: the campus fills a tall rounded panel, with a small eyebrow top-left and the full institution name large in white at the bottom-left, degree and years beneath. No buttons or scroll labels. The lens hover (aperture, focus pull, viewfinder corners) is kept; the EXIF caption is gone.
+
+### 2026-11-22 — A typical day, per role
+
+- Each role card in Experience now opens on "A typical day": for the Azure DevOps role an eight-step working day with clock times (pipeline checks, stand-up, pull requests, YAML work, Terraform plan and apply, release, post-release monitoring, housekeeping); for the Junior DevOps role a NOC shift from handover to handover (monitoring sweep, Ivanti queue, releases, alert triage and RCA, access requests). A pill toggle switches to the résumé responsibilities list.
+- Content is derived from the résumé. Steps carry short labels (Checks, Stand-up, Reviews, Pipelines, Terraform, Release, Monitor, Upkeep) rather than clock times.
+
+### 2026-11-22 — Work as stacked case panels
+
+- The 2 × 2 card grid is replaced by four full-width case panels, one per project. Each panel has an index (01 / 04), the employer and years, a large two-tone title, a short description, and a bottom strip with the stack chips and a one-line outcome. The live mock screenshot sits large on the right in its own tinted frame and still tilts toward the cursor.
+- On desktop the panels are sticky: each one holds at the top of the viewport while the next slides over it, and the covered panel scales back slightly (a scroll handler sets a progress variable per panel). Panels alternate white and soft grey.
+- Below 980px the panels stack normally with the mock on top; on phones the frame hugs the mock so nothing is cropped. Reduced-motion users get static panels.
+- Copy per panel now separates what was built (description) from what it changed (outcome), all drawn from the résumé.
+
+### 2026-11-22 — Toolbox as a ledger of big rows
+
+- The skills grid was too small and read as a generic card layout. It is now its own block, "What I work with", with a left-aligned heading, a lead line (six groups, 34 tools) and six full-width rows, one per group.
+- Each row has a large outlined numeral (the tool count, echoing the outlined hero name), the group name at heading size, a one-line note on what the group is for, a mono caption and the tool chips. Chips carry the real logo where one exists (Azure DevOps, Git, SonarQube, Docker, Kubernetes, Terraform, Grafana, Key Vault, Python, Bash).
+- Hovering a row inverts it to ink: the row background fills, the numeral fills solid, text and chips turn white. Rows fade in one after another as the list scrolls into view.
+- Tablet: numeral plus text stack with the chips under them. Phone: numeral beside the name, chips wrap below the row text.
+
+### 2026-11-22 — Skills as cards, education as one dual panel
+
+- Skills moved out of the text column into a full-width 3 × 2 grid of group cards, each with an icon, the group name, a count badge and the chips. Two columns on tablets, one on phones. Languages moved to the photo card's location line.
+- Education is a single frame holding both campuses as expanding halves: 50/50 at rest with both names visible; hovering a half grows it to about two-thirds, enlarges its name, hides the other half's degree line and plays the lens moment (aperture, focus pull, viewfinder corners) on it. On phones the halves stack inside the frame and a tap both fires the lens and keeps that half expanded.
 
 ### 2026-11-21 — Azure blue palette
 
