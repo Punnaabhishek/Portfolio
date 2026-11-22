@@ -103,7 +103,8 @@ p { margin: 0; }
 .stage .role { font-size: clamp(1.5rem, 2.6vw, 2.1rem); font-weight: 600; letter-spacing: -0.02em; }
 .stage .blurb { max-width: 28ch; font-size: 0.98rem; color: var(--muted); }
 .soc-pill { display: inline-flex; align-items: center; gap: 10px; padding: 11px 18px; border-radius: 999px; background: var(--card); border: 1px solid var(--line); color: var(--fg); text-decoration: none; font-weight: 600; font-size: 0.92rem; box-shadow: 0 8px 20px -16px rgba(0,0,0,.4); transition: transform 200ms, background 200ms, color 200ms, border-color 200ms; }
-.soc-pill svg { width: 16px; height: 16px; }
+.soc-pill svg, .soc-pill .ico { width: 18px; height: 18px; }
+.ico { display: block; border-radius: 4px; flex: none; }
 .soc-pill:hover { background: var(--ink); color: var(--ink-fg); border-color: transparent; transform: translateY(-2px); }
 .portrait { position: relative; z-index: 1; width: clamp(240px, 34vw, 400px); animation: rise 1000ms 300ms cubic-bezier(.2,.8,.2,1) both; }
 .portrait img { width: 100%; height: auto; display: block; filter: drop-shadow(0 24px 32px rgba(0,0,0,.18)); }
@@ -129,6 +130,7 @@ p { margin: 0; }
 
 /* ---------- collage panel ---------- */
 .collage { padding-block: 56px; }
+.collage .swipe { display: none; margin: 0; }
 .panel { background: var(--bg-soft); border: 1px solid var(--line); border-radius: 36px; position: relative; overflow: hidden; height: clamp(420px, 56vw, 720px); }
 .shot { position: absolute; background: #fff; color: #111312; border: 1px solid rgba(0,0,0,.08); border-radius: 14px; box-shadow: 0 40px 80px -30px rgba(0, 0, 0, .4); overflow: hidden; transition: transform 500ms cubic-bezier(.2,.8,.2,1); will-change: transform; }
 .shot:hover { transform: translateY(-8px) rotate(0deg) !important; z-index: 3; }
@@ -301,7 +303,7 @@ section.who .h2 { margin-top: 10px; }
 .photo-card .foot .soc { display: flex; gap: 10px; }
 .photo-card .foot .soc a { width: 30px; height: 30px; border-radius: 50%; border: 1px solid var(--line); display: grid; place-items: center; color: var(--fg); text-decoration: none; transition: background 200ms; }
 .photo-card .foot .soc a:hover { background: var(--accent); color: var(--on-accent); border-color: transparent; }
-.photo-card .foot .soc svg { width: 14px; height: 14px; }
+.photo-card .foot .soc svg, .photo-card .foot .soc .ico { width: 16px; height: 16px; }
 .photo-card .foot .nm { text-align: right; font-size: 0.85rem; line-height: 1.3; }
 .photo-card .foot .nm b { display: block; font-family: var(--font-display); font-style: italic; font-weight: 400; font-size: 1.15rem; }
 .photo-card .foot .nm span { color: var(--muted); font-size: 0.75rem; }
@@ -331,7 +333,7 @@ section.who .h2 { margin-top: 10px; }
 .copy { display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border-radius: 999px; border: 1px solid color-mix(in srgb, var(--fg) 18%, transparent); background: color-mix(in srgb, var(--bg) 70%, transparent); color: var(--fg); font-family: inherit; font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: background 200ms; text-decoration: none; }
 .copy:hover { background: var(--bg); }
 .copy.ok { border-color: var(--accent-deep); }
-.copy svg { width: 14px; height: 14px; }
+.copy svg, .copy .ico { width: 16px; height: 16px; }
 
 /* ---------- footer: giant name that fills in as you scroll ---------- */
 footer { padding-block: 72px 24px; background: var(--bg); overflow: hidden; }
@@ -348,7 +350,7 @@ footer { padding-block: 72px 24px; background: var(--bg); overflow: hidden; }
 .fline .clock small { font-size: 0.72rem; color: var(--muted); margin-left: 6px; }
 .fline .links { display: flex; align-items: center; gap: 6px; }
 .fline .links a { display: inline-flex; align-items: center; gap: 8px; padding: 9px 14px; border-radius: 999px; border: 1px solid var(--line); color: var(--fg); text-decoration: none; font-weight: 600; font-size: 0.82rem; transition: background 200ms, color 200ms, border-color 200ms; }
-.fline .links a svg { width: 14px; height: 14px; }
+.fline .links a svg, .fline .links a .ico { width: 16px; height: 16px; }
 .fline .links a:hover { background: var(--ink); color: var(--ink-fg); border-color: transparent; }
 .fline .links a.top { width: 38px; height: 38px; padding: 0; justify-content: center; }
 @media (max-width: 640px) { .fline .links a span { display: none; } .fline .links a { width: 38px; height: 38px; padding: 0; justify-content: center; } }
@@ -361,6 +363,98 @@ footer { padding-block: 72px 24px; background: var(--bg); overflow: hidden; }
   #about, #works, #who, #contact { min-height: calc(100vh - var(--nav-h)); min-height: calc(100svh - var(--nav-h)); display: grid; align-content: center; }
   #about, #works, #who { padding-block: 48px; }
   #contact { padding-block: 0; }
+}
+
+/* ---------- phone layout (≤ 760px): one consistent rhythm ---------- */
+@media (max-width: 760px) {
+  /* rhythm */
+  .collage { padding-block: 32px 40px; }
+  .statement { padding-block: 48px 40px; }
+  .process { padding-block: 40px 56px; }
+  .highlights { padding-block: 0 56px; }
+  .works, section.who { padding-block: 32px 56px; }
+  .cta-band { padding-block: 24px 0; }
+  .kicker { font-size: 1.05rem; }
+  .h2 { font-size: clamp(2rem, 8.4vw, 2.6rem); }
+
+  /* nav: icons spread evenly, call-to-action stays a round button */
+  .nav .wrap { grid-template-columns: 1fr auto; gap: 10px; }
+  .nav ul { width: 100%; justify-content: space-between; gap: 0; }
+  .nav ul a { padding: 10px; }
+
+  /* hero: big name, portrait overlapping it, tidy 2x2 contact grid */
+  .hero .wrap { padding-top: 92px; }
+  .hero-name { font-size: clamp(2.9rem, 13.4vw, 4.4rem); gap: 0 0.3em; line-height: 0.92; }
+  .stage { margin-top: -0.55em; gap: 18px; }
+  .portrait { width: min(74vw, 330px); }
+  .stage .left { gap: 10px; }
+  .stage .role { font-size: 1.7rem; }
+  .stage .blurb { font-size: 0.95rem; max-width: 36ch; }
+  .stage .right { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 100%; max-width: 420px; padding-bottom: 32px; justify-items: stretch; }
+  .soc-pill { justify-content: center; padding: 12px 14px; }
+
+  /* marquee */
+  .marquee { padding-block: 16px; }
+  .marquee span { font-size: 0.95rem; gap: 10px; }
+
+  /* collage: swipeable carousel instead of a tall stack */
+  .panel { display: flex; align-items: flex-start; grid-template-columns: none; gap: 12px; height: auto; padding: 14px; border-radius: 22px; overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory; scroll-padding: 14px; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+  .panel::-webkit-scrollbar { display: none; }
+  .shot { flex: 0 0 min(80%, 300px); scroll-snap-align: center; position: static; transform: none !important; width: auto; }
+  .shot .body { font-size: 0.74rem; }
+  .collage .swipe { display: flex; justify-content: center; gap: 6px; margin-top: 14px; font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+
+  /* statement: dial, then a neat 2-column grid of skills, then the card */
+  .statement .head { gap: 8px; }
+  .statement h2 { font-size: clamp(1.45rem, 6.2vw, 1.9rem); }
+  .orbit { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 18px; }
+  .orbit .col, .orbit .col.r { display: contents; }
+  .dial { order: 1; flex: 0 0 auto; width: min(68vw, 300px); margin: 0 calc((100% - min(68vw, 300px)) / 2) 30px; }
+  .orbit .pill { order: 2; flex: 0 0 calc(50% - 4px); justify-content: center; text-align: center; white-space: normal; line-height: 1.2; padding: 10px 10px; font-size: 0.8rem; min-height: 44px; margin: 0 !important; }
+  .orbit .pill i { flex: none; }
+  .skill-card { order: 3; flex: 0 0 100%; width: 100%; margin-top: 10px; padding: 18px 18px 16px; }
+  .skill-card h3 { font-size: 1.2rem; }
+  .skill-card p { font-size: 0.92rem; }
+
+  /* process */
+  .flow { margin-top: 36px; }
+  .steps-grid { gap: 22px; }
+  .step { gap: 14px; }
+  .step .node { width: 48px; height: 48px; }
+  .step .scard { padding: 20px 18px 18px; }
+
+  /* highlights */
+  .hl { padding: 22px; }
+  .hl .q { right: 18px; top: 16px; width: 24px; height: 24px; }
+  .hl p { padding-right: 24px; }
+
+  /* works */
+  .work-grid { margin-top: 32px; gap: 32px; }
+  .work .frame { padding: 8%; border-radius: 18px; }
+  .work .cap { gap: 8px; }
+  .work .cap b { font-size: 1rem; }
+
+  /* who */
+  .who-grid { margin-top: 32px; gap: 32px; }
+  .photo-card { transform: none; padding: 12px; }
+  .who-text > p { font-size: 0.98rem; }
+  .ledger .row { padding: 14px 0; }
+
+  /* cta */
+  .cta-band .inner { padding-block: 64px 44px; }
+  .cta-band h2 { font-size: clamp(2.2rem, 10vw, 3rem); }
+
+  /* footer: name flush left on both lines, compact bottom line */
+  footer { padding-block: 48px 20px; }
+  .bigname { font-size: clamp(3rem, 16vw, 5rem); }
+  .bigname .w.r { justify-content: flex-start; }
+  .fline { margin-top: 26px; padding-top: 18px; gap: 12px 16px; }
+  .fline .meta { gap: 10px 16px; font-size: 0.8rem; }
+}
+@media (max-width: 400px) {
+  .nav ul a { padding: 9px 7px; }
+  .nav ul a svg { width: 19px; height: 19px; }
+  .orbit .pill { font-size: 0.76rem; padding: 9px 8px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -399,9 +493,9 @@ footer { padding-block: 72px 24px; background: var(--bg); overflow: hidden; }
         <img src="img/hero.png" alt="Abhishek Punna" width="1000" height="1339">
       </div>
       <div class="right">
-        <a class="soc-pill" href="https://www.linkedin.com/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM10 9h3.8v1.7h.1c.5-1 1.8-2 3.7-2 4 0 4.7 2.6 4.7 6V21h-4v-5.3c0-1.3 0-2.9-1.8-2.9s-2 1.4-2 2.8V21h-4z"/></svg>LinkedIn</a>
-        <a class="soc-pill" href="mailto:punnaabhishek9@gmail.com?subject=Hello%20Abhishek"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>Email</a>
-        <a class="soc-pill" href="tel:+919912511744"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Call</a>
+        <a class="soc-pill" href="https://www.linkedin.com/" target="_blank" rel="noopener"><img class="ico" src="img/linkedin.svg" alt="" width="24" height="24">LinkedIn</a>
+        <a class="soc-pill" href="mailto:punnaabhishek9@gmail.com?subject=Hello%20Abhishek"><img class="ico" src="img/gmail.svg" alt="" width="24" height="24">Email</a>
+        <a class="soc-pill" href="tel:+919912511744"><img class="ico" src="img/phone.svg" alt="" width="24" height="24">Call</a>
         <a class="soc-pill" href="#works"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M3 12h18"/></svg>Portfolio</a>
       </div>
     </div>
@@ -439,6 +533,7 @@ footer { padding-block: 72px 24px; background: var(--bg); overflow: hidden; }
 app:511  <span class="g">pushed</span>
 web:88   <span class="g">pushed</span></div><div class="sub">tagged by build id</div></div></div>
     </div>
+    <p class="swipe" aria-hidden="true">swipe for more <span>→</span></p>
   </div>
 </section>
 
@@ -457,7 +552,7 @@ web:88   <span class="g">pushed</span></div><div class="sub">tagged by build id<
         <span class="pill" style="--dot:#f05133;--bd:3.2s"><i></i>Git &amp; Azure Repos</span>
       </div>
       <div class="dial" id="solid" aria-label="Skill dial: drag to browse, the front face is the selected skill">
-        <span class="hint"><span class="desk">follows your mouse · </span>drag to browse · front face is selected</span>
+        <span class="hint"><span class="desk">follows your mouse · </span>drag to browse<span class="desk"> · front face is selected</span></span>
       </div>
       <div class="col r">
         <span class="pill" style="--dot:#ffc93d;--bd:.4s"><i></i>Monitoring</span>
@@ -577,8 +672,8 @@ web:88   <span class="g">pushed</span></div><div class="sub">tagged by build id<
         </div>
         <div class="foot">
           <div class="soc">
-            <a href="https://www.linkedin.com/" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM10 9h3.8v1.7h.1c.5-1 1.8-2 3.7-2 4 0 4.7 2.6 4.7 6V21h-4v-5.3c0-1.3 0-2.9-1.8-2.9s-2 1.4-2 2.8V21h-4z"/></svg></a>
-            <a href="mailto:punnaabhishek9@gmail.com?subject=Hello%20Abhishek" aria-label="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 7l-10 7L2 7"/></svg></a>
+            <a href="https://www.linkedin.com/" target="_blank" rel="noopener" aria-label="LinkedIn"><img class="ico" src="img/linkedin.svg" alt="" width="24" height="24"></a>
+            <a href="mailto:punnaabhishek9@gmail.com?subject=Hello%20Abhishek" aria-label="Email"><img class="ico" src="img/gmail.svg" alt="" width="24" height="24"></a>
           </div>
           <div class="nm"><b>Abhishek Punna</b><span>Azure DevOps Engineer</span></div>
         </div>
@@ -609,9 +704,9 @@ web:88   <span class="g">pushed</span></div><div class="sub">tagged by build id<
       <h2>Let's Make It Happen</h2>
       <p>Always open to new opportunities in Azure DevOps, cloud engineering and platform work. Let's build a release process your team can trust.</p>
       <div class="contact-rows" id="contact-email">
-        <a class="copy" href="mailto:punnaabhishek9@gmail.com?subject=Hello%20Abhishek"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 7l-10 7L2 7"/></svg><span>punnaabhishek9@gmail.com</span></a>
-        <a class="copy" href="tel:+919912511744"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg><span>+91 99125 11744</span></a>
-        <a class="copy" href="https://www.linkedin.com/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM10 9h3.8v1.7h.1c.5-1 1.8-2 3.7-2 4 0 4.7 2.6 4.7 6V21h-4v-5.3c0-1.3 0-2.9-1.8-2.9s-2 1.4-2 2.8V21h-4z"/></svg><span>LinkedIn</span></a>
+        <a class="copy" href="mailto:punnaabhishek9@gmail.com?subject=Hello%20Abhishek"><img class="ico" src="img/gmail.svg" alt="" width="24" height="24"><span>punnaabhishek9@gmail.com</span></a>
+        <a class="copy" href="tel:+919912511744"><img class="ico" src="img/phone.svg" alt="" width="24" height="24"><span>+91 99125 11744</span></a>
+        <a class="copy" href="https://www.linkedin.com/" target="_blank" rel="noopener"><img class="ico" src="img/linkedin.svg" alt="" width="24" height="24"><span>LinkedIn</span></a>
       </div>
     </div>
   </div>
@@ -629,9 +724,9 @@ web:88   <span class="g">pushed</span></div><div class="sub">tagged by build id<
         <span class="clock"><span id="clock">--:--</span><small>IST</small></span>
       </div>
       <div class="links">
-        <a href="https://www.linkedin.com/" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM10 9h3.8v1.7h.1c.5-1 1.8-2 3.7-2 4 0 4.7 2.6 4.7 6V21h-4v-5.3c0-1.3 0-2.9-1.8-2.9s-2 1.4-2 2.8V21h-4z"/></svg><span>LinkedIn</span></a>
-        <a href="mailto:punnaabhishek9@gmail.com?subject=Hello%20Abhishek" aria-label="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg><span>Email</span></a>
-        <a href="tel:+919912511744" aria-label="Call"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg><span>Call</span></a>
+        <a href="https://www.linkedin.com/" target="_blank" rel="noopener" aria-label="LinkedIn"><img class="ico" src="img/linkedin.svg" alt="" width="24" height="24"><span>LinkedIn</span></a>
+        <a href="mailto:punnaabhishek9@gmail.com?subject=Hello%20Abhishek" aria-label="Email"><img class="ico" src="img/gmail.svg" alt="" width="24" height="24"><span>Email</span></a>
+        <a href="tel:+919912511744" aria-label="Call"><img class="ico" src="img/phone.svg" alt="" width="24" height="24"><span>Call</span></a>
         <a class="top" href="#top" aria-label="Back to top"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg></a>
       </div>
     </div>
@@ -909,7 +1004,7 @@ web:88   <span class="g">pushed</span></div><div class="sub">tagged by build id<
     var letters = Array.prototype.slice.call(bigname.querySelectorAll('i')), N = letters.length;
     function fillName() {
       var r = bigname.getBoundingClientRect(), vh = window.innerHeight;
-      var p = reduce ? 1 : Math.min(1, Math.max(0, (vh - r.top) / (r.height + vh * 0.35)));
+      var p = reduce ? 1 : Math.min(1, Math.max(0, (vh - r.top) / (r.height + 40)));
       var count = Math.round(p * N);
       letters.forEach(function (l, i) { l.classList.toggle('on', i < count); });
     }

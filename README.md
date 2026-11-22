@@ -102,6 +102,27 @@ Switched from the Azure-blue accent to a monochrome black-on-white scheme and re
 - Two class-name collisions fixed: the hero's "PUNNA" span used `.solid`, the same class as the 3D dial container, so it inherited a square aspect ratio and left a 250px gap above the portrait (dial container renamed to `.dial`, hero span to `.fill`). The highlight cards' author block used `.who`, the same class as the Experience section, so it inherited 40px / 90px section padding (section rules scoped to `section.who`).
 - Result: zero elements wider than the viewport at 320, 360 and 390px; hero, collage, dial, pills, card, stepper, work cards, ledger, CTA and footer all stack correctly.
 
+### 2026-11-22 — Phone layout rework (≤ 760px)
+
+A dedicated phone stylesheet block replaces the earlier patchwork of per-section tweaks. Verified by rendering at 390px.
+
+- **Hero:** name scaled up to about 13vw with the portrait overlapping it like desktop; role and blurb centred; contact links in an equal-width 2 × 2 grid.
+- **Nav:** five icons spread evenly with the round "Let's Talk" button on the right.
+- **Collage:** the six mock screenshots are a horizontal swipe carousel with scroll-snap and a "swipe for more" hint, instead of a 1200px-tall stack.
+- **Statement:** dial capped at 300px, "drag to browse" hint only, skills in a tidy two-column grid of equal pills, then the detail card.
+- **Spacing:** one rhythm across sections (32 to 56px), smaller kicker and headings, tighter stepper nodes and cards.
+- **Who / footer:** photo card no longer tilted on phones; footer name flush left on both lines with a compact contact row.
+
+### 2026-11-22 — Brand-colour contact icons
+
+- LinkedIn, email and phone icons across the site (hero pills, photo card, contact band, footer) now use real logos in their own colours: LinkedIn blue "in" tile (`img/linkedin.svg`), the Gmail "M" (`img/gmail.svg`) and a green phone tile (`img/phone.svg`), instead of monochrome line icons.
+
+### 2026-11-22 — Bug sweep before push
+
+- Static: tag balance, anchor targets, image paths, script element ids and duplicate ids all verified clean.
+- Runtime (headless Edge, 1280 and 390px): Three.js loads, dial reacts to pill hover and dot clicks, nav highlight and sticky bar work, clock and year populate, zero console errors.
+- Fixed: the footer name only filled 9 of 13 letters at the bottom of a desktop-height page; the fill now completes once the name is fully in view.
+
 ### 2026-11-21 — Azure blue palette
 
 Replaced the original lime / neon-yellow accent with Microsoft Azure blue to match the Azure DevOps positioning.
