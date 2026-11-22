@@ -216,6 +216,21 @@ Email, phone and LinkedIn each appeared four or five times. Now each has one cle
 - Each role card in Experience now opens on "A typical day": for the Azure DevOps role an eight-step working day with clock times (pipeline checks, stand-up, pull requests, YAML work, Terraform plan and apply, release, post-release monitoring, housekeeping); for the Junior DevOps role a NOC shift from handover to handover (monitoring sweep, Ivanti queue, releases, alert triage and RCA, access requests). A pill toggle switches to the résumé responsibilities list.
 - Content is derived from the résumé. Steps carry short labels (Checks, Stand-up, Reviews, Pipelines, Terraform, Release, Monitor, Upkeep) rather than clock times.
 
+### 2026-11-22 — Phone pass three: a third shorter
+
+- The phone page went from about 16 screens to about 11 with nothing removed.
+- Work: the four case panels sit side by side and swipe, with dots and a swipe hint, reusing the collage carousel code (one shared `carousel()` helper).
+- Pipeline stepper is a vertical timeline on phones: node on the left, text on the right, no cards.
+- Toolbox rows are compact (smaller numeral beside the name, tighter chips, no caption line). Typical-day lists fold to three steps. Education halves are 260 to 320px tall. Smaller hero portrait and dial, tighter contact panel.
+
+### 2026-11-22 — Phone pass two: native-app feel
+
+- Navigation is a bottom tab bar on phones (icons with labels, safe-area aware); the top of the screen belongs to the content and the hero name is larger.
+- Every section header sits flush left on a phone; only the hero and footer stay centred.
+- Skill dial: the ten pills are one horizontal swipeable chip row under the dial instead of a two-column grid, and the selected chip scrolls itself into view as the dial steps. The skill card follows directly.
+- Who: the photo card becomes a compact contact card (square photo, name, role, location). The typical-day lists use stacked labels (no clipped words) and fold to four steps with a "Show the full day" button.
+- Pipeline stepper nodes lighter and tighter. No horizontal overflow at 390px.
+
 ### 2026-11-22 — Work as stacked case panels
 
 - The 2 × 2 card grid is replaced by four full-width case panels, one per project. Each panel has an index (01 / 04), the employer and years, a large two-tone title, a short description, and a bottom strip with the stack chips and a one-line outcome. The live mock screenshot sits large on the right in its own tinted frame and still tilts toward the cursor.
