@@ -216,6 +216,16 @@ Email, phone and LinkedIn each appeared four or five times. Now each has one cle
 - Each role card in Experience now opens on "A typical day": for the Azure DevOps role an eight-step working day with clock times (pipeline checks, stand-up, pull requests, YAML work, Terraform plan and apply, release, post-release monitoring, housekeeping); for the Junior DevOps role a NOC shift from handover to handover (monitoring sweep, Ivanti queue, releases, alert triage and RCA, access requests). A pill toggle switches to the résumé responsibilities list.
 - Content is derived from the résumé. Steps carry short labels (Checks, Stand-up, Reviews, Pipelines, Terraform, Release, Monitor, Upkeep) rather than clock times.
 
+### 2026-11-22 — Motion pass: the page moves with you
+
+- Intro: on the first visit of a session an ink curtain with the AP monogram lifts, then the hero draws in behind it. Skipped for reduced motion and on later loads in the same tab.
+- Navigation: one indicator slides between links as sections change and follows the hover, instead of each link growing its own underline.
+- Magnetic controls on desktop: nav links, carousel arrows, contact rows, stat pills, tabs and the back-to-top button lean toward the cursor and spring back.
+- Scroll parallax: campus photos, the portrait card, the work mocks and the big toolbox numerals drift a little slower than the page.
+- The logo marquee leans with scroll speed and settles when you stop. The hero portrait floats gently.
+- Entrances: toolbox chips pop in one after another per row; work panels slide in from the right with a stagger. The work row shows a "drag" cursor label on desktop.
+- Phones: chips, rows, tabs and buttons press down slightly on tap.
+
 ### 2026-11-22 — Phone scroll fix at the skill dial
 
 - The dial used `touch-action: none` so it could be dragged, which on a phone also swallowed vertical swipes that began on it and made the page feel stuck. On touch screens it now allows vertical panning and pinch zoom; a sideways drag still rotates it.

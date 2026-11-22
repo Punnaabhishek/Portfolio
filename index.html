@@ -113,6 +113,20 @@ html.lenis, html.lenis body { height: auto; }
 [hidden] { display: none !important; }
 .c-row .ico.doc { display: grid; place-items: center; font-family: var(--font-mono); font-size: 0.6rem; font-weight: 500; letter-spacing: .06em; color: var(--fg); }
 
+/* ---------- intro: an ink curtain lifts once per session, then the hero draws in ---------- */
+.curtain { display: none; }
+html.intro .curtain { display: grid; place-items: center; position: fixed; inset: 0; z-index: 60; background: var(--ink); color: var(--ink-fg); animation: curtainUp 760ms cubic-bezier(.76, 0, .24, 1) 520ms forwards; }
+html.intro .curtain span { font-weight: 800; font-size: clamp(2.4rem, 7vw, 4.6rem); letter-spacing: -0.05em; animation: monoIn 520ms cubic-bezier(.2,.8,.2,1) 60ms both, monoOut 360ms cubic-bezier(.76,0,.24,1) 480ms forwards; }
+@keyframes curtainUp { to { transform: translateY(-101%); } }
+@keyframes monoIn { from { opacity: 0; transform: translateY(18px); } }
+@keyframes monoOut { to { opacity: 0; transform: translateY(-30px); } }
+html.intro .nav { animation-delay: 1050ms; }
+html.intro .hero-name i { animation-delay: calc(980ms + var(--i) * 45ms); }
+html.intro .portrait { animation-delay: 1100ms, 2300ms; }
+html.intro .stage .left { animation-delay: 1300ms; }
+html.intro .stage .right { animation-delay: 1450ms; }
+@media (hover: none) { html.intro .hero-name .outline i { animation-delay: calc(980ms + var(--i) * 45ms), calc(2300ms + var(--i) * 90ms); } }
+
 /* ---------- top navigation bar ---------- */
 .nav { position: fixed; top: env(safe-area-inset-top, 0px); left: 0; right: 0; z-index: 20; background: color-mix(in srgb, var(--bg) 86%, transparent); backdrop-filter: blur(14px) saturate(1.2); -webkit-backdrop-filter: blur(14px) saturate(1.2); border-bottom: 1px solid transparent; transition: border-color 250ms, box-shadow 250ms; animation: navIn 700ms cubic-bezier(.2,.8,.2,1) both; }
 .nav.scrolled { border-bottom-color: var(--line); box-shadow: 0 12px 30px -26px rgba(0,0,0,.4); }
@@ -127,6 +141,11 @@ html.lenis, html.lenis body { height: auto; }
 .nav ul a { position: relative; }
 .nav ul a::after { content: ""; position: absolute; left: 16px; right: 16px; bottom: 7px; height: 2px; border-radius: 2px; background: var(--fg); transform: scaleX(0); transform-origin: left; transition: transform 320ms cubic-bezier(.2,.8,.2,1); }
 .nav ul a:hover::after, .nav ul a.active::after { transform: scaleX(1); }
+.nav ul { position: relative; }
+.nav-ind { position: absolute; left: 0; bottom: 7px; width: 0; height: 2px; border-radius: 2px; background: var(--fg); opacity: 0; pointer-events: none; transition: left 460ms cubic-bezier(.2,.8,.2,1), width 460ms cubic-bezier(.2,.8,.2,1), opacity 200ms; }
+.nav-ind.on { opacity: 1; }
+@media (min-width: 641px) { .nav ul a::after { display: none; } }
+@media (max-width: 640px) { .nav-ind { display: none; } }
 .nav ul a.active { font-weight: 700; }
 @media (max-width: 900px) { .nav .avail { display: none; } .nav .wrap { grid-template-columns: auto 1fr auto; } .nav ul { justify-self: start; } }
 @media (max-width: 640px) {
@@ -172,7 +191,8 @@ html.lenis, html.lenis body { height: auto; }
 .stat { display: inline-flex; align-items: baseline; gap: 9px; padding: 10px 16px; border-radius: 999px; background: var(--card); border: 1px solid var(--line); color: var(--muted); font-size: 0.88rem; font-weight: 500; box-shadow: 0 8px 20px -16px rgba(0,0,0,.4); white-space: nowrap; transition: transform 200ms, border-color 200ms; }
 .stat b { font-family: var(--font-mono); font-weight: 500; font-size: 1.05rem; color: var(--fg); letter-spacing: -0.02em; }
 .stat:hover { transform: translateY(-2px); border-color: var(--fg); }
-.portrait { position: relative; z-index: 1; width: clamp(240px, 34vw, 400px); animation: rise 1000ms 300ms cubic-bezier(.2,.8,.2,1) both; }
+.portrait { position: relative; z-index: 1; width: clamp(240px, 34vw, 400px); animation: rise 1000ms 300ms cubic-bezier(.2,.8,.2,1) both, floatY 7s ease-in-out 1500ms infinite; }
+@keyframes floatY { 50% { transform: translateY(-9px); } }
 .portrait img { width: 100%; height: auto; display: block; -webkit-mask-image: linear-gradient(to bottom, #000 80%, transparent 100%); mask-image: linear-gradient(to bottom, #000 80%, transparent 100%); }
 @keyframes rise { from { opacity: 0; transform: translateY(60px); } to { opacity: 1; transform: none; } }
 @keyframes fade { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
@@ -413,6 +433,8 @@ html.lenis, html.lenis body { height: auto; }
 .work-grid { display: flex; align-items: stretch; gap: 22px; margin: 48px -16px 0; padding: 6px 16px 30px; overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory; scroll-padding: 16px; scrollbar-width: none; -webkit-overflow-scrolling: touch; cursor: grab; }
 .work-grid::-webkit-scrollbar { display: none; }
 .work-grid.dragging { cursor: grabbing; scroll-snap-type: none; scroll-behavior: auto; }
+.work-grid .work { opacity: 0; translate: 56px 0; transition: opacity 720ms cubic-bezier(.2,.8,.2,1), translate 720ms cubic-bezier(.2,.8,.2,1); transition-delay: calc(var(--i, 0) * 110ms); }
+.work-grid.in .work { opacity: 1; translate: 0 0; }
 .work-grid.dragging * { pointer-events: none; }
 .work { position: relative; flex: 0 0 clamp(340px, 46%, 540px); scroll-snap-align: start; display: grid; grid-template-columns: 1fr; grid-template-rows: auto 1fr; gap: 22px; padding: 18px 18px 26px; border-radius: 28px; background: var(--card); border: 1px solid var(--line); box-shadow: var(--shadow); min-width: 0; }
 .work:nth-child(even) { background: var(--bg-soft); }
@@ -457,7 +479,7 @@ section.who .h2 { margin-top: 10px; }
 .photo-card { background: var(--card); border: 1px solid var(--line); border-radius: 22px; padding: 16px; box-shadow: var(--shadow); transform: rotate(-2.5deg); transition: transform 500ms cubic-bezier(.2,.8,.2,1); }
 .photo-card:hover { transform: rotate(0); }
 .photo-card .img { aspect-ratio: 4 / 4.4; border-radius: 14px; background: #eef0f2; display: grid; place-items: center; overflow: hidden; }
-.photo-card .img img { width: 100%; height: 100%; display: block; object-fit: cover; object-position: center top; transition: transform 600ms cubic-bezier(.2,.8,.2,1); }
+.photo-card .img img { width: 100%; height: 112%; margin-top: -6%; display: block; object-fit: cover; object-position: center top; transition: transform 600ms cubic-bezier(.2,.8,.2,1); }
 .photo-card:hover .img img { transform: scale(1.04); }
 .photo-card .foot { display: flex; align-items: center; justify-content: space-between; padding: 14px 6px 2px; }
 .photo-card .foot .loc { font-size: 0.78rem; color: var(--muted); font-family: var(--font-mono); letter-spacing: .04em; }
@@ -487,6 +509,7 @@ section.who .h2 { margin-top: 10px; }
 .duo:hover .half, .duo.has-on .half { flex-grow: 1; }
 .duo:hover .half:hover, .duo.has-on .half.on { flex-grow: 2.1; }
 .half img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; transform: scale(1.02); }
+.half img { top: -8%; height: 116%; }
 .edu-scrim { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,.28) 0%, rgba(0,0,0,0) 32%, rgba(0,0,0,.02) 55%, rgba(0,0,0,.62) 100%); pointer-events: none; }
 .edu-eyebrow { position: absolute; left: clamp(20px, 3vw, 40px); top: clamp(20px, 3vw, 34px); color: #fff; font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: .16em; text-transform: uppercase; opacity: .92; z-index: 2; }
 .edu-copy { position: absolute; left: clamp(20px, 3vw, 40px); right: clamp(20px, 3vw, 40px); bottom: clamp(22px, 3vw, 40px); color: #fff; display: grid; gap: 12px; z-index: 2; }
@@ -527,7 +550,8 @@ section.who .h2 { margin-top: 10px; }
 .stack li:hover .g p, .stack li:focus-within .g p { color: color-mix(in srgb, var(--ink-fg) 72%, transparent); }
 .stack li:hover .g small, .stack li:focus-within .g small { color: color-mix(in srgb, var(--ink-fg) 60%, transparent); }
 .stack .tl { display: flex; flex-wrap: wrap; gap: 8px; }
-.stack .tl span { display: inline-flex; align-items: center; gap: 8px; font-size: 0.88rem; font-weight: 600; padding: 9px 14px; border-radius: 999px; background: var(--card); border: 1px solid var(--line); transition: background 240ms, color 240ms, border-color 240ms, transform 240ms; }
+.stack .tl span { display: inline-flex; align-items: center; gap: 8px; font-size: 0.88rem; font-weight: 600; padding: 9px 14px; border-radius: 999px; background: var(--card); border: 1px solid var(--line); opacity: 0; translate: 0 10px; transition: opacity 520ms cubic-bezier(.2,.8,.2,1), translate 520ms cubic-bezier(.2,.8,.2,1), background 240ms, color 240ms, border-color 240ms, transform 240ms; transition-delay: calc(var(--i, 0) * 90ms + var(--j, 0) * 35ms + 160ms), calc(var(--i, 0) * 90ms + var(--j, 0) * 35ms + 160ms), 0ms, 0ms, 0ms, 0ms; }
+.stack.rv-in li .tl span, .stack:not(.rv-wait) li .tl span { opacity: 1; translate: 0 0; }
 .stack .tl img { width: 18px; height: 18px; display: block; }
 .stack li:hover .tl span, .stack li:focus-within .tl span { background: transparent; border-color: color-mix(in srgb, var(--ink-fg) 30%, transparent); color: var(--ink-fg); }
 .stack li:hover .tl span:hover { background: var(--ink-fg); color: var(--ink); border-color: transparent; transform: translateY(-2px); }
@@ -743,6 +767,17 @@ footer { padding-block: 56px 24px; background: var(--bg); overflow: hidden; }
   .pill-rail .pill { font-size: 0.78rem; padding: 9px 12px; }
 }
 
+.mag.mag.mag { transition-property: translate, transform, background, color, border-color, box-shadow, opacity; transition-duration: 420ms, 300ms, 200ms, 200ms, 200ms, 300ms, 200ms; transition-timing-function: cubic-bezier(.2,.8,.2,1); }
+@media (hover: none) {
+  .pill, .c-row, .hl-tabs button, .day-more, .stack .tl span, .w-meta dd.chips span, .nav ul a, .arr, .stat, .sc-dots button { transition-duration: 120ms; }
+  .pill:active, .c-row:active, .hl-tabs button:active, .day-more:active, .stack .tl span:active, .w-meta dd.chips span:active, .nav ul a:active, .arr:active, .stat:active { transform: scale(.95); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .work-grid .work { opacity: 1; translate: 0 0; }
+  .stack .tl span { opacity: 1; translate: 0 0; }
+  .portrait { animation: none; }
+  .half img, .photo-card .img img { translate: none !important; }
+}
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
@@ -755,6 +790,8 @@ footer { padding-block: 56px 24px; background: var(--bg); overflow: hidden; }
 <a class="skip" href="#about">Skip to content</a>
 <div class="progress" id="progress" aria-hidden="true"></div>
 <div class="cur" id="cur" aria-hidden="true"><i class="cur-dot"></i><i class="cur-ring"><span></span></i></div>
+<div class="curtain" id="curtain" aria-hidden="true"><span>AP</span></div>
+<script>(function(){try{if(!matchMedia('(prefers-reduced-motion: reduce)').matches&&!sessionStorage.getItem('ap-intro')){document.documentElement.classList.add('intro');sessionStorage.setItem('ap-intro','1');}}catch(e){}})();</script>
 <nav class="nav" id="nav" aria-label="Main">
   <div class="wrap">
     <span class="pill avail"><i></i>Available for new opportunities</span>
@@ -905,7 +942,7 @@ web:88   <span class="g">pushed</span></div><div class="sub">tagged by build id<
     </div>
     <div class="work-grid" id="caseStack" data-lenis-prevent>
       <article class="work" style="--i:0">
-        <div class="w-text rv">
+        <div class="w-text">
           <div class="w-top"><span class="idx">01 <em>/ 04</em></span><span class="org">Charles Technologies · 2025 → now</span></div>
           <h3>Release pipelines <span class="serif">on Azure DevOps</span></h3>
           <p class="desc">YAML multi-stage pipelines that build Docker images, run unit tests and SonarQube analysis, then deploy to App Service and Container Apps, with Azure CLI steps and Entra ID service connections for secure, automated access.</p>
@@ -918,7 +955,7 @@ web:88   <span class="g">pushed</span></div><div class="sub">tagged by build id<
 <span class="k">trigger</span>: main · <span class="g">quality gate passed</span></div><div class="kv"><div><b>5</b><small>stages</small></div><div><b>2</b><small>environments</small></div></div></div></div></div>
       </article>
       <article class="work" style="--i:1">
-        <div class="w-text rv">
+        <div class="w-text">
           <div class="w-top"><span class="idx">02 <em>/ 04</em></span><span class="org">Charles Technologies · 2025 → now</span></div>
           <h3>Terraform <span class="serif">on Azure</span></h3>
           <p class="desc">Reusable Terraform modules for App Service, Container Apps, Key Vault and storage, so a new environment is a plan, a review and an apply rather than an afternoon in the portal.</p>
@@ -934,7 +971,7 @@ web:88   <span class="g">pushed</span></div><div class="sub">tagged by build id<
 <span class="g">Apply complete! Resources: 6 added</span></div><div class="chip-row"><span>Key Vault</span><span>RBAC</span><span>Entra ID</span><span>Storage</span></div></div></div></div>
       </article>
       <article class="work" style="--i:2">
-        <div class="w-text rv">
+        <div class="w-text">
           <div class="w-top"><span class="idx">03 <em>/ 04</em></span><span class="org">Charles Technologies · 2025 → now</span></div>
           <h3>Docker, ACR <span class="serif">&amp; Container Apps</span></h3>
           <p class="desc">Images built in the pipeline, tagged by build id and stored in Azure Container Registry, then rolled out to Container Apps. The same automation builds and publishes the mobile apps.</p>
@@ -946,7 +983,7 @@ web:88   <span class="g">pushed</span></div><div class="sub">tagged by build id<
         <div class="frame"><div class="shot"><div class="bar"><i></i><i></i><i></i><span>acr · container apps</span></div><div class="body"><div class="ttl">Containerised Delivery</div><div class="bars"><i style="height:30%"></i><i style="height:50%"></i><i style="height:45%"></i><i style="height:72%"></i><i style="height:66%"></i><i style="height:90%"></i><i style="height:100%"></i><i style="height:84%"></i></div><div class="sub">images tagged by Build.BuildId · pushed to ACR · rolled to Container Apps</div></div></div></div>
       </article>
       <article class="work" style="--i:3">
-        <div class="w-text rv">
+        <div class="w-text">
           <div class="w-top"><span class="idx">04 <em>/ 04</em></span><span class="org">Awan Infotech · 2021 → 2025</span></div>
           <h3>Kubernetes support <span class="serif">&amp; NOC</span></h3>
           <p class="desc">24/7 NOC operations across production, UAT and staging: incident management with Grafana, Prometheus and New Relic, log analysis, L1/L2 troubleshooting and escalation on critical systems.</p>
@@ -1415,7 +1452,14 @@ web:88   <span class="g">pushed</span></div><div class="sub">tagged by build id<
     var cur = 0;
     sections.forEach(function (s, i) { if (s && s.getBoundingClientRect().top <= window.innerHeight * 0.45) cur = i; });
     links.forEach(function (a, i) { a.classList.toggle('active', i === cur); });
+    navCur = cur; moveInd(links[cur]);
   }
+  var navCur = 0, navUl = document.getElementById('navList'), ind = document.createElement('i'); ind.className = 'nav-ind'; if (navUl) navUl.appendChild(ind);
+  function moveInd(a) { if (!a || !navUl) return; ind.style.left = (a.offsetLeft + 16) + 'px'; ind.style.width = Math.max(0, a.offsetWidth - 32) + 'px'; ind.classList.add('on'); }
+  links.forEach(function (a) { a.addEventListener('mouseenter', function () { moveInd(a); }); });
+  if (navUl) navUl.addEventListener('mouseleave', function () { moveInd(links[navCur]); });
+  window.addEventListener('resize', function () { moveInd(links[navCur]); });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { moveInd(links[navCur]); });
   var navEl = document.getElementById('nav'), progressEl = document.getElementById('progress');
   function onNav() {
     navEl.classList.toggle('scrolled', window.scrollY > 8);
@@ -1451,9 +1495,9 @@ web:88   <span class="g">pushed</span></div><div class="sub">tagged by build id<
     var mx = -100, my = -100, rx = -100, ry = -100, shown = false;
     document.addEventListener('mousemove', function (e) {
       mx = e.clientX; my = e.clientY; if (!shown) { rx = mx; ry = my; shown = true; cur.classList.remove('hide'); }
-      var t = e.target.closest ? e.target.closest('a, button, .pill, .tile, .dial, .sc-dots button, .c-row, .stat, .work .frame, .shot') : null;
+      var t = e.target.closest ? e.target.closest('a, button, .pill, .tile, .dial, .sc-dots button, .c-row, .stat, .work .frame, .shot, .work-grid') : null;
       cur.classList.toggle('on', !!t && !t.classList.contains('dial'));
-      var lbl = t && t.classList.contains('dial') ? 'drag' : (t && t.closest('.work') ? 'tilt' : '');
+      var lbl = t && (t.classList.contains('dial') || t.classList.contains('work-grid')) ? 'drag' : (t && t.closest('.work') ? 'tilt' : '');
       cur.classList.toggle('label', !!lbl); if (lbl) ringLbl.textContent = lbl;
     });
     document.addEventListener('mousedown', function () { cur.classList.add('down'); });
@@ -1584,6 +1628,44 @@ web:88   <span class="g">pushed</span></div><div class="sub">tagged by build id<
       fr.addEventListener('mouseleave', function () { fr.style.setProperty('--ry', '0deg'); fr.style.setProperty('--rx', '0deg'); });
     });
   }
+  /* curtain: remove once it has lifted */
+  var curtain = document.getElementById('curtain');
+  if (curtain) { if (!document.documentElement.classList.contains('intro')) curtain.parentNode.removeChild(curtain); else curtain.addEventListener('animationend', function (e) { if (e.target === curtain && curtain.parentNode) curtain.parentNode.removeChild(curtain); }); }
+
+  /* magnetic: small controls lean toward the cursor */
+  if (window.matchMedia('(pointer: fine)').matches && !reduce) {
+    Array.prototype.forEach.call(document.querySelectorAll('.nav ul a, .works .arr, .c-row, .stat, .day-more, .hl-tabs button, footer .top'), function (el) {
+      el.classList.add('mag');
+      el.addEventListener('mousemove', function (e) { var r = el.getBoundingClientRect(), dx = e.clientX - (r.left + r.width / 2), dy = e.clientY - (r.top + r.height / 2); el.style.translate = (dx * 0.22).toFixed(1) + 'px ' + (dy * 0.3).toFixed(1) + 'px'; });
+      el.addEventListener('mouseleave', function () { el.style.translate = ''; });
+    });
+  }
+
+  /* parallax: photos, mocks and the big numerals drift a little slower than the page */
+  var paras = [];
+  [['.half img', 8], ['.photo-card .img img', 6], ['.work .frame .shot', 4], ['.stack .n', 14]].forEach(function (p) { Array.prototype.forEach.call(document.querySelectorAll(p[0]), function (el) { paras.push([el, p[1]]); }); });
+  var pTick = false;
+  function parallax() {
+    pTick = false; var vh = window.innerHeight;
+    paras.forEach(function (p) { var el = p[0], r = (el.parentNode || el).getBoundingClientRect(); if (r.bottom < -80 || r.top > vh + 80) return; var c = (r.top + r.height / 2 - vh / 2) / vh; el.style.translate = '0 ' + (c * -p[1]).toFixed(2) + '%'; });
+  }
+  if (!reduce && paras.length) { window.addEventListener('scroll', function () { if (!pTick) { pTick = true; requestAnimationFrame(parallax); } }, { passive: true }); window.addEventListener('resize', parallax); parallax(); }
+
+  /* marquee: leans with the scroll, settles when you stop */
+  var mq = document.querySelector('.marquee'), mqLast = window.scrollY, mqSkew = 0, mqTarget = 0, mqRun = false;
+  function mqLoop() { mqSkew += (mqTarget - mqSkew) * 0.14; mqTarget *= 0.82; mq.style.transform = 'skewX(' + mqSkew.toFixed(2) + 'deg)'; if (Math.abs(mqSkew) > 0.04 || Math.abs(mqTarget) > 0.04) requestAnimationFrame(mqLoop); else { mq.style.transform = ''; mqRun = false; } }
+  if (mq && !reduce) window.addEventListener('scroll', function () { var y = window.scrollY, v = y - mqLast; mqLast = y; mqTarget = Math.max(-9, Math.min(9, v * 0.09)); if (!mqRun) { mqRun = true; requestAnimationFrame(mqLoop); } }, { passive: true });
+
+  /* toolbox chips: index within the row for the stagger */
+  Array.prototype.forEach.call(document.querySelectorAll('.stack .tl'), function (tl) { Array.prototype.forEach.call(tl.children, function (c, j) { c.style.setProperty('--j', j); }); });
+
+  /* work panels: slide in when the row arrives */
+  var wg = document.getElementById('caseStack');
+  if (wg) {
+    if (reduce || !('IntersectionObserver' in window)) wg.classList.add('in');
+    else { var wio = new IntersectionObserver(function (en) { if (en[0].isIntersecting) { wg.classList.add('in'); wio.disconnect(); } }, { threshold: 0.12 }); wio.observe(wg); }
+  }
+
   window.addEventListener('scroll', function () { onScroll(); onNav(); }, { passive: true }); onScroll(); onNav();
 
   /* footer name: letters fill solid as the footer scrolls into view, and empty again on the way back up */
