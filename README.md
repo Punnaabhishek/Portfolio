@@ -21,8 +21,8 @@ Live preview: https://claude.ai/artifact/YSMVNEaj97o4H1AMmEEcT9
 
 ## Sections
 
-1. **Nav** — floating glass pill with Home / About me / Portfolio / Career and a call button.
-2. **Hero** — name, title, portrait, availability pill, 5-year summary and "Get in Touch" CTA.
+1. **Nav** — fixed white top bar: availability pill, centred links with counts (Work [4], Experience [5y+]) and a black "Let's Talk" button.
+2. **Hero** — giant outlined + solid name, colour portrait overlapping it, role, blurb, "Let's collaborate" CTA and LinkedIn / Email / Call / Portfolio pills.
 3. **Tool marquee** — scrolling strip of the tools used day to day.
 4. **Collage panel** — six mock screenshots (pipeline run, `terraform plan`, App Insights, AKS pods, deploy frequency, ACR).
 5. **Statement** — positioning line with floating skill pills.
@@ -35,7 +35,7 @@ Live preview: https://claude.ai/artifact/YSMVNEaj97o4H1AMmEEcT9
 
 ## Design
 
-- **Palette:** Azure blue accent (`#0078d4`), deep blue (`#005a9e`) for gradients, pale blue (`#e3f1fc`) for chips, sky blue (`#8cc8ff`) for the large hero and CTA washes. White text on every accent surface.
+- **Palette:** monochrome. Black (`#111312`) accent on white, light grey tints (`#eef0f2`, `#f5f6f7`) for chips and panels, green (`#22c55e`) only for the availability dot. Portraits keep their natural colour; the lime rim light and backdrops were removed from the PNGs.
 - **Dark mode:** follows `prefers-color-scheme`, with blue-tinted neutrals; can be forced with `data-theme="dark"` or `"light"` on `<html>`.
 - **Type:** Instrument Serif (display), Plus Jakarta Sans (body), JetBrains Mono (code).
 - **Motion:** scroll-reveal, pipeline rail animation, marquee, pointer-tracking hero glow. All respect `prefers-reduced-motion`.
@@ -60,6 +60,28 @@ The site is plain static files, so it can be hosted on GitHub Pages, Azure Stati
 **GitHub Pages:** repo *Settings → Pages → Build and deployment → Source: Deploy from a branch → `main` / `/ (root)`*. The site will be served at `https://punnaabhishek.github.io/Portfolio/`.
 
 ## Changelog
+
+### 2026-11-22 — Black-and-white redesign of the nav and hero
+
+Switched from the Azure-blue accent to a monochrome black-on-white scheme and rebuilt the top of the page in an editorial layout.
+
+- **Navigation:** replaced the floating glass pill with a full-width fixed top bar: availability pill on the left, centred links (Home, About, Work [4], Experience [5y+], Contact) and a black "Let's Talk" button on the right. It gains a hairline border and shadow once the page scrolls. Links collapse to icons under 640px.
+- **Hero:** giant uppercase name with "ABHISHEK" outlined and "PUNNA" solid, portrait overlapping the lettering, role + blurb + "Let's collaborate" on the left and LinkedIn, Email, Call and Portfolio pills on the right.
+- **Portrait fix:** removed the pointer-tracking hero glow. The green tint on the face was rim light baked into the PNGs from the original lime theme, so `img/hero.png`, `img/card.png` and `img/avatar.png` were re-processed: lime-hued pixels neutralised and the solid lime backdrops replaced with light grey. Portraits stay in full colour.
+- **Palette:** accent tokens renamed from `--lime*` to `--accent*` and set to black / near-black, with light grey tints and a green dot reserved for "available" status. Dark mode inverts to white-on-black.
+- Collage panel and footer are light grey on white rather than black, so the whole page reads as white background with black type.
+- Collage mock screenshots, pipeline stepper, footer and all greenish greys updated to neutral monochrome values.
+- Added the 800 weight of Plus Jakarta Sans for the hero name.
+- Removed the "Let's collaborate" button from the hero; the nav "Let's Talk" button is the single call to action.
+- The page is light-only now: the automatic dark mode that followed the system setting is gone, so the background is always white. `data-theme="dark"` on `<html>` still works as an explicit opt-in.
+
+### 2026-11-22 — Statement section rebuilt around a skill dial
+
+- Replaced the floating-pill statement with a skill dial: the sentence on top, five skill pills either side, a low-poly dodecahedron in the middle (Three.js r128 from cdnjs) and a detail card underneath.
+- Each of the ten skills owns one pentagon. The face shows the real tool logo on a white tile with the name beneath (Azure DevOps, Docker, Terraform, Kubernetes, Git, Grafana, Key Vault, Python + Bash, Azure, SonarQube); two spare faces carry the AP monogram and "5+ years on Azure". Added `img/git.svg`, `img/azuredevops.svg` and `img/keyvault.svg`; all logo SVGs now carry an intrinsic 24px size so they draw cleanly onto canvas textures.
+- The face turned to the front is the selected skill. The card shows its proof sentence, tools and where it was used, with a dot strip to jump between skills.
+- Idle: the dial steps to the next skill every few seconds. Drag to browse with inertia, hover or tap a pill or a face to jump to it, and on desktop the pills drift toward the cursor.
+- Rendering pauses off screen; auto-stepping respects reduced-motion; on phones the dial sits above the pills and card.
 
 ### 2026-11-21 — Azure blue palette
 
