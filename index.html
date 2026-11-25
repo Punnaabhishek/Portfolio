@@ -75,6 +75,8 @@ p { margin: 0; }
 .pill { display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: 999px; background: var(--card); border: 1px solid var(--line); font-size: 0.85rem; font-weight: 600; box-shadow: 0 8px 20px -14px rgba(0,0,0,.35); }
 .pill i { width: 8px; height: 8px; border-radius: 50%; background: #22c55e; box-shadow: 0 0 0 4px rgba(34,197,94,.25); animation: pulse 2s infinite; }
 @keyframes pulse { 50% { box-shadow: 0 0 0 7px rgba(34,197,94,.08); } }
+.nav .avail.ping { animation: ping 1.3s cubic-bezier(.2,.8,.2,1) 1; }
+@keyframes ping { 0% { box-shadow: 0 0 0 0 rgba(34,197,94,.5); } 100% { box-shadow: 0 0 0 22px rgba(34,197,94,0); } }
 
 /* reveal */
 .rv-wait { opacity: 0; transform: translateY(28px); }
@@ -132,7 +134,8 @@ html.intro .stage .right { animation-delay: 1450ms; }
 .nav.scrolled { border-bottom-color: var(--line); box-shadow: 0 12px 30px -26px rgba(0,0,0,.4); }
 @keyframes navIn { from { opacity: 0; transform: translateY(-12px); } to { opacity: 1; transform: none; } }
 .nav .wrap { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 16px; height: 76px; }
-.nav .wrap::after { content: ""; }
+.nav .wrap::after { display: none; }
+.nav .theme { justify-self: end; }
 .nav .avail { justify-self: start; white-space: nowrap; }
 .nav ul { display: flex; align-items: center; gap: 6px; list-style: none; margin: 0; padding: 0; }
 .nav ul a { display: inline-flex; align-items: baseline; gap: 7px; text-decoration: none; font-size: 0.95rem; font-weight: 500; color: var(--fg); padding: 10px 16px; border-radius: 999px; white-space: nowrap; transition: background 200ms, color 200ms; }
@@ -631,6 +634,7 @@ footer { padding-block: 56px 24px; background: var(--bg); overflow: hidden; }
   .nav { top: auto; bottom: 0; padding-bottom: env(safe-area-inset-bottom, 0px); border-bottom: 0; border-top: 1px solid var(--line); background: color-mix(in srgb, var(--bg) 94%, transparent); animation: none; }
   .nav.scrolled { border-bottom-color: transparent; box-shadow: 0 -14px 30px -26px rgba(0,0,0,.35); }
   .nav .wrap { grid-template-columns: 1fr; gap: 0; height: 60px; }
+  .nav .theme { display: none; }
   .nav .wrap::after { display: none; }
   .nav ul { width: 100%; justify-content: space-between; gap: 0; }
   .nav ul a { padding: 8px 10px; flex: 1 1 0; border-radius: 12px; }
@@ -689,7 +693,8 @@ footer { padding-block: 56px 24px; background: var(--bg); overflow: hidden; }
   .flow { margin-top: 22px; }
   .steps-grid { grid-template-columns: 1fr; gap: 0; }
   .step { grid-template-columns: 40px 1fr; justify-items: start; text-align: left; gap: 0 14px; padding-bottom: 20px; position: relative; }
-  .step::before { content: ""; position: absolute; left: 19.5px; top: 40px; bottom: 0; width: 1px; background: var(--line); }
+  .step::before { content: ""; position: absolute; left: 19.5px; top: 40px; bottom: 0; width: 1px; background: var(--fg); transform: scaleY(0); transform-origin: top; transition: transform 800ms cubic-bezier(.2,.8,.2,1); transition-delay: calc(var(--sd, 0ms) + 260ms); }
+  .flow.rv-in .step::before { transform: scaleY(1); }
   .step:last-child::before { display: none; }
   .step .node { width: 40px; height: 40px; border-width: 2px; }
   .step .node svg { width: 17px; height: 17px; }
@@ -767,12 +772,29 @@ footer { padding-block: 56px 24px; background: var(--bg); overflow: hidden; }
   .pill-rail .pill { font-size: 0.78rem; padding: 9px 12px; }
 }
 
+.c-pair { position: relative; }
+.c-pair .c-row { padding-right: 62px; }
+.copy { position: absolute; right: 10px; top: 50%; translate: 0 -50%; width: 38px; height: 38px; border-radius: 11px; border: 1px solid var(--line); background: var(--card); color: var(--fg); display: grid; place-items: center; cursor: pointer; z-index: 1; transition: background 200ms, color 200ms, border-color 200ms, transform 200ms; }
+.copy svg { width: 16px; height: 16px; }
+.copy:hover { background: var(--ink); color: var(--ink-fg); border-color: transparent; }
+.copy:active { transform: scale(.94); }
+.copy.done { background: #22c55e; color: #fff; border-color: transparent; }
+.copy .tip { position: absolute; right: 0; bottom: calc(100% + 8px); padding: 5px 9px; border-radius: 8px; background: var(--ink); color: var(--ink-fg); font-size: 0.7rem; font-weight: 600; white-space: nowrap; opacity: 0; translate: 0 4px; transition: opacity 200ms, translate 200ms; pointer-events: none; }
+.copy:hover .tip, .copy.done .tip { opacity: 1; translate: 0 0; }
+.theme { position: relative; width: 38px; height: 38px; border-radius: 50%; border: 1px solid var(--line); background: var(--card); color: var(--fg); display: grid; place-items: center; cursor: pointer; padding: 0; transition: background 200ms, color 200ms, border-color 200ms, transform 300ms; }
+.theme svg { width: 17px; height: 17px; grid-area: 1 / 1; transition: opacity 300ms, transform 520ms cubic-bezier(.2,.8,.2,1); }
+.theme .moon { opacity: 0; transform: rotate(-90deg) scale(.6); }
+:root[data-theme="dark"] .theme .moon { opacity: 1; transform: none; }
+:root[data-theme="dark"] .theme .sun { opacity: 0; transform: rotate(90deg) scale(.6); }
+.theme:hover { background: var(--ink); color: var(--ink-fg); border-color: transparent; }
+body { transition: background-color 350ms, color 350ms; }
 .mag.mag.mag { transition-property: translate, transform, background, color, border-color, box-shadow, opacity; transition-duration: 420ms, 300ms, 200ms, 200ms, 200ms, 300ms, 200ms; transition-timing-function: cubic-bezier(.2,.8,.2,1); }
 @media (hover: none) {
   .pill, .c-row, .hl-tabs button, .day-more, .stack .tl span, .w-meta dd.chips span, .nav ul a, .arr, .stat, .sc-dots button { transition-duration: 120ms; }
   .pill:active, .c-row:active, .hl-tabs button:active, .day-more:active, .stack .tl span:active, .w-meta dd.chips span:active, .nav ul a:active, .arr:active, .stat:active { transform: scale(.95); }
 }
 @media (prefers-reduced-motion: reduce) {
+  .step::before, .flow .rail i { transform: none !important; }
   .work-grid .work { opacity: 1; translate: 0 0; }
   .stack .tl span { opacity: 1; translate: 0 0; }
   .portrait { animation: none; }
@@ -791,7 +813,7 @@ footer { padding-block: 56px 24px; background: var(--bg); overflow: hidden; }
 <div class="progress" id="progress" aria-hidden="true"></div>
 <div class="cur" id="cur" aria-hidden="true"><i class="cur-dot"></i><i class="cur-ring"><span></span></i></div>
 <div class="curtain" id="curtain" aria-hidden="true"><span>AP</span></div>
-<script>(function(){try{if(!matchMedia('(prefers-reduced-motion: reduce)').matches&&!sessionStorage.getItem('ap-intro')){document.documentElement.classList.add('intro');sessionStorage.setItem('ap-intro','1');}}catch(e){}})();</script>
+<script>(function(){try{var t=localStorage.getItem('ap-theme');if(t==='dark'||t==='light')document.documentElement.setAttribute('data-theme',t);}catch(e){}try{if(!matchMedia('(prefers-reduced-motion: reduce)').matches&&!sessionStorage.getItem('ap-intro')){document.documentElement.classList.add('intro');sessionStorage.setItem('ap-intro','1');}}catch(e){}})();</script>
 <nav class="nav" id="nav" aria-label="Main">
   <div class="wrap">
     <span class="pill avail"><i></i>Available for new opportunities</span>
@@ -802,6 +824,7 @@ footer { padding-block: 56px 24px; background: var(--bg); overflow: hidden; }
       <li><a href="#who"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M3 12h18"/></svg><span>Experience</span><small>[5y+]</small></a></li>
       <li><a href="#contact"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg><span>Contact</span></a></li>
     </ul>
+    <button type="button" class="theme" aria-label="Switch to dark mode"><svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg><svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button>
   </div>
 </nav>
 
@@ -819,7 +842,8 @@ footer { padding-block: 56px 24px; background: var(--bg); overflow: hidden; }
       </div>
       <div class="right">
         <span class="stat"><b>5+</b>years on Azure</span>
-        <span class="stat"><b>3</b>environments run</span>
+        <span class="stat"><b>11</b>pipelines in production</span>
+        <span class="stat"><b>3</b>projects maintained</span>
       </div>
     </div>
     <div class="hero-base"></div>
@@ -945,14 +969,14 @@ web:88   <span class="g">pushed</span></div><div class="sub">tagged by build id<
         <div class="w-text">
           <div class="w-top"><span class="idx">01 <em>/ 04</em></span><span class="org">Charles Technologies · 2025 → now</span></div>
           <h3>Release pipelines <span class="serif">on Azure DevOps</span></h3>
-          <p class="desc">YAML multi-stage pipelines that build Docker images, run unit tests and SonarQube analysis, then deploy to App Service and Container Apps, with Azure CLI steps and Entra ID service connections for secure, automated access.</p>
+          <p class="desc">Eleven YAML pipelines across three projects: backend, web app and website for each, plus infrastructure provisioning and pull-request validation on the newest. They build Docker images, run unit tests and SonarQube analysis, then deploy to App Service and Container Apps through Entra ID service connections.</p>
           <dl class="w-meta">
             <div><dt>Stack</dt><dd class="chips"><span>Azure Pipelines</span><span>YAML</span><span>Docker</span><span>SonarQube</span><span>App Service</span></dd></div>
             <div><dt>Outcome</dt><dd>Every merge to main is built, tested, scanned and deployed to development and production without a hand on it.</dd></div>
           </dl>
         </div>
         <div class="frame tint"><div class="shot"><div class="bar"><i></i><i></i><i></i><span>azure-pipelines.yml</span></div><div class="body"><div class="ttl">Multi-stage CI/CD</div><div class="steps"><b>✓</b><i class="done"></i><b>✓</b><i class="done"></i><b>✓</b><i class="done"></i><b>✓</b><i class="done"></i><b>✓</b></div><div class="mono"><span class="k">stages</span>: Build → Test → Infra → Deploy → Monitor
-<span class="k">trigger</span>: main · <span class="g">quality gate passed</span></div><div class="kv"><div><b>5</b><small>stages</small></div><div><b>2</b><small>environments</small></div></div></div></div></div>
+<span class="k">trigger</span>: main · <span class="g">quality gate passed</span></div><div class="kv"><div><b>11</b><small>pipelines</small></div><div><b>3</b><small>projects</small></div></div></div></div></div>
       </article>
       <article class="work" style="--i:1">
         <div class="w-text">
@@ -1124,8 +1148,8 @@ web:88   <span class="g">pushed</span></div><div class="sub">tagged by build id<
         </div>
       </div>
       <div class="c-card">
-        <a class="c-row" href="mailto:punnaabhishek9@gmail.com?subject=Hello%20Abhishek"><img class="ico" src="img/gmail.svg" alt="" width="24" height="24"><span><small>Email</small><b>punnaabhishek9@gmail.com</b></span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M8 7h9v9"/></svg></a>
-        <a class="c-row" href="tel:+919912511744"><img class="ico" src="img/phone.svg" alt="" width="24" height="24"><span><small>Call</small><b>+91 99125 11744</b></span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M8 7h9v9"/></svg></a>
+        <div class="c-pair"><a class="c-row" href="mailto:punnaabhishek9@gmail.com?subject=Hello%20Abhishek"><img class="ico" src="img/gmail.svg" alt="" width="24" height="24"><span><small>Email</small><b>punnaabhishek9@gmail.com</b></span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M8 7h9v9"/></svg></a><button type="button" class="copy" data-copy="punnaabhishek9@gmail.com" aria-label="Copy email address"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/></svg><span class="tip">Copy</span></button></div>
+        <div class="c-pair"><a class="c-row" href="tel:+919912511744"><img class="ico" src="img/phone.svg" alt="" width="24" height="24"><span><small>Call</small><b>+91 99125 11744</b></span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M8 7h9v9"/></svg></a><button type="button" class="copy" data-copy="+91 99125 11744" aria-label="Copy phone number"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/></svg><span class="tip">Copy</span></button></div>
         <a class="c-row" id="resumeRow" href="Abhishek-Punna-Resume.pdf" target="_blank" rel="noopener"><span class="ico doc" aria-hidden="true">PDF</span><span><small>Résumé</small><b>Download CV</b></span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v12M6 11l6 6 6-6"/></svg></a>
         <a class="c-row" href="https://www.linkedin.com/in/abhishek-punna-633319374/" target="_blank" rel="noopener"><img class="ico" src="img/linkedin.svg" alt="" width="24" height="24"><span><small>LinkedIn</small><b>Abhishek Punna</b></span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M8 7h9v9"/></svg></a>
       </div>
@@ -1145,6 +1169,7 @@ web:88   <span class="g">pushed</span></div><div class="sub">tagged by build id<
       </div>
       <div class="links">
         <a href="https://www.linkedin.com/in/abhishek-punna-633319374/" target="_blank" rel="noopener" aria-label="LinkedIn"><img class="ico" src="img/linkedin.svg" alt="" width="24" height="24"><span>LinkedIn</span></a>
+        <button type="button" class="theme" aria-label="Switch to dark mode"><svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg><svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button>
         <a class="top" href="#top" aria-label="Back to top"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg></a>
       </div>
     </div>
@@ -1152,12 +1177,12 @@ web:88   <span class="g">pushed</span></div><div class="sub">tagged by build id<
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
 /* Skill dial: a dodecahedron whose twelve pentagons carry the ten skills (plus two marks).
    The face turned to the front is the selected skill; the card under it shows the proof.
-   Idle: steps from skill to skill. Drag to browse. Hover a pill or a face to jump. */
-(function () {
+   Idle: steps from skill to skill. Drag to browse. Hover a pill or a face to jump.
+   three.js (about 600 KB) and the scene load only when the section comes within a screen of view. */
+function startDial() {
   var host = document.getElementById('solid'), orbit = document.getElementById('orbit'), card = document.getElementById('skillCard');
   if (!host || !orbit || !card || !window.THREE) return;
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -1409,6 +1434,17 @@ web:88   <span class="g">pushed</span></div><div class="sub">tagged by build id<
     renderer.render(scene, camera);
   }
   loop();
+}
+(function () {
+  var host = document.getElementById('solid'); if (!host) return;
+  var started = false;
+  function boot() {
+    if (started) return; started = true;
+    if (window.THREE) return startDial();
+    var sc = document.createElement('script'); sc.src = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js'; sc.onload = startDial; document.head.appendChild(sc);
+  }
+  if ('IntersectionObserver' in window) { var io = new IntersectionObserver(function (en) { if (en[0].isIntersecting) { boot(); io.disconnect(); } }, { rootMargin: '900px 0px' }); io.observe(host); } else boot();
+  window.addEventListener('load', function () { setTimeout(boot, 3500); });
 })();
 </script>
 <script>
@@ -1628,6 +1664,31 @@ web:88   <span class="g">pushed</span></div><div class="sub">tagged by build id<
       fr.addEventListener('mouseleave', function () { fr.style.setProperty('--ry', '0deg'); fr.style.setProperty('--rx', '0deg'); });
     });
   }
+  /* copy buttons: clipboard first, hidden textarea as the fallback */
+  function copyFallback(v, done) { var t = document.createElement('textarea'); t.value = v; t.setAttribute('readonly', ''); t.style.position = 'fixed'; t.style.opacity = '0'; document.body.appendChild(t); t.select(); try { document.execCommand('copy'); done(); } catch (e) {} document.body.removeChild(t); }
+  Array.prototype.forEach.call(document.querySelectorAll('button.copy'), function (b) {
+    var tip = b.querySelector('.tip'), timer = null;
+    function done() { b.classList.add('done'); if (tip) tip.textContent = 'Copied'; clearTimeout(timer); timer = setTimeout(function () { b.classList.remove('done'); if (tip) tip.textContent = 'Copy'; }, 1600); }
+    b.addEventListener('click', function () { var v = b.getAttribute('data-copy'); if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(v).then(done, function () { copyFallback(v, done); }); else copyFallback(v, done); });
+  });
+
+  /* theme: light by default, dark on request, remembered on this device */
+  var themeBtns = Array.prototype.slice.call(document.querySelectorAll('button.theme'));
+  function applyTheme(t) {
+    document.documentElement.setAttribute('data-theme', t);
+    try { localStorage.setItem('ap-theme', t); } catch (e) {}
+    themeBtns.forEach(function (b) { b.setAttribute('aria-label', t === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'); });
+  }
+  themeBtns.forEach(function (b) { b.addEventListener('click', function () { applyTheme(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'); }); });
+  if (document.documentElement.getAttribute('data-theme') === 'dark') themeBtns.forEach(function (b) { b.setAttribute('aria-label', 'Switch to light mode'); });
+
+  /* availability pill: one ring when the contact panel comes into view */
+  var availPill = document.querySelector('.nav .avail'), contactSec = document.getElementById('contact');
+  if (availPill && contactSec && !reduce && 'IntersectionObserver' in window) {
+    availPill.addEventListener('animationend', function (e) { if (e.animationName === 'ping') availPill.classList.remove('ping'); });
+    new IntersectionObserver(function (en) { if (en[0].isIntersecting) { availPill.classList.remove('ping'); void availPill.offsetWidth; availPill.classList.add('ping'); } }, { threshold: 0.35 }).observe(contactSec);
+  }
+
   /* curtain: remove once it has lifted */
   var curtain = document.getElementById('curtain');
   if (curtain) { if (!document.documentElement.classList.contains('intro')) curtain.parentNode.removeChild(curtain); else curtain.addEventListener('animationend', function (e) { if (e.target === curtain && curtain.parentNode) curtain.parentNode.removeChild(curtain); }); }

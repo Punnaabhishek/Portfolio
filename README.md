@@ -216,6 +216,15 @@ Email, phone and LinkedIn each appeared four or five times. Now each has one cle
 - Each role card in Experience now opens on "A typical day": for the Azure DevOps role an eight-step working day with clock times (pipeline checks, stand-up, pull requests, YAML work, Terraform plan and apply, release, post-release monitoring, housekeeping); for the Junior DevOps role a NOC shift from handover to handover (monitoring sweep, Ivanti queue, releases, alert triage and RCA, access requests). A pill toggle switches to the résumé responsibilities list.
 - Content is derived from the résumé. Steps carry short labels (Checks, Stand-up, Reviews, Pipelines, Terraform, Release, Monitor, Upkeep) rather than clock times.
 
+### 2026-11-25 — Real numbers, copy buttons, dark mode, lighter load
+
+- Numbers from Abhishek: three projects, each with backend, web-app and website pipelines, plus infrastructure provisioning and pull-request validation on the newest project, so 11 pipelines in production. Hero stats are now 5+ years, 11 pipelines, 3 projects; the first work panel and its mock say the same.
+- Pipeline stepper on phones draws its vertical rail stage by stage as it scrolls into view, matching the desktop rail.
+- The "Available" pill in the nav rings once when the contact panel comes into view.
+- Copy buttons beside the email and phone rows (clipboard API with a hidden-textarea fallback), with a Copied tooltip.
+- Dark mode toggle: sun/moon button in the nav on desktop and in the footer everywhere. The choice is remembered per device and applied before first paint. Light remains the default.
+- three.js (about 600 KB) and the 3D dial now load only when the skills section comes within a screen of view, or 3.5 s after load as a fallback, so the first paint is lighter.
+
 ### 2026-11-22 — Motion pass: the page moves with you
 
 - Intro: on the first visit of a session an ink curtain with the AP monogram lifts, then the hero draws in behind it. Skipped for reduced motion and on later loads in the same tab.
